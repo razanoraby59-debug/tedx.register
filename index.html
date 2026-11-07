@@ -578,12 +578,17 @@
       .socials svg { width: 17px; height: 17px; }
 
       /* license sentence: one line on phones */
-      .legal { flex-direction: column; gap: .4rem; }
-      .legal span:first-child {
-        font-size: clamp(.5rem, 2.35vw, .78rem);
-        white-space: nowrap;
-      }
-    }
+/* license sentence: one line on phones */
+.legal { flex-direction: column; gap: .4rem; }
+
+.legal span:first-child {
+  font-size: clamp(.58rem, 2.65vw, .82rem);
+  white-space: nowrap;
+}
+
+.legal span:last-child {
+  font-size: .78rem;
+}
     @media (max-width: 360px) {
       .t-details { grid-template-columns: 1fr; }
       .branches { grid-template-columns: 1fr; }
