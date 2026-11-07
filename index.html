@@ -550,15 +550,16 @@
       .pill { display: none; }
       .foot-inner { flex-direction: column; align-items: flex-start; }
 
-      /* perks: keep all three on one row */
-      .perks { flex-wrap: nowrap; gap: .3rem; }
+      /* perks: keep all three on one row (red dot kept, just smaller) */
+      .perks { flex-wrap: nowrap; gap: .28rem; }
       .perks li {
         flex: 1 1 0;
         justify-content: center;
-        padding: .55rem .25rem;
-        font-size: clamp(.56rem, 2.9vw, .82rem);
+        gap: .3rem;
+        padding: .55rem .2rem;
+        font-size: clamp(.52rem, 2.75vw, .82rem);
       }
-      .perks li::before { display: none; }
+      .perks li::before { width: .34rem; height: .34rem; }
 
       /* footer socials: keep all three on one row */
       .socials { width: 100%; flex-wrap: nowrap; gap: .4rem; }
@@ -583,6 +584,12 @@
     @media (max-width: 360px) {
       .t-details { grid-template-columns: 1fr; }
       .branches { grid-template-columns: 1fr; }
+    }
+    /* very small phones (iPhone SE): tighter chips so the dot + text still fit one line */
+    @media (max-width: 340px) {
+      .perks { gap: .22rem; }
+      .perks li { gap: .22rem; padding: .5rem .12rem; font-size: .5rem; }
+      .perks li::before { width: .3rem; height: .3rem; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
