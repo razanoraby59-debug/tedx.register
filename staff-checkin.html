@@ -1,0 +1,929 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#EB0028">
+  <title>Event Check-in | TEDxAASTMT</title>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+    :root {
+      --red: #EB0028;
+      --black: #111111;
+      --white: #ffffff;
+      --muted: #777777;
+      --border: #e8e8e8;
+      --green: #16834a;
+      --red-light: #fff0f2;
+      --green-light: #eaf8ef;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #fafafa;
+      color: var(--black);
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      height: 76px;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7%;
+      border-bottom: 4px solid var(--red);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--red);
+    }
+
+    .header-label {
+      font-size: 12px;
+      color: #cccccc;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    main {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 55px 22px 70px;
+      flex: 1;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 7vw, 52px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.035);
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 9px;
+    }
+
+    input {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid #dddddd;
+      border-radius: 9px;
+      padding: 12px 14px;
+      font-size: 15px;
+      outline: none;
+      background: white;
+      color: var(--black);
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(235, 0, 40, 0.08);
+    }
+
+    .field-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    button {
+      min-height: 48px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .primary-button {
+      background: var(--red);
+      color: white;
+    }
+
+    .primary-button:hover:not(:disabled) {
+      background: #c90022;
+    }
+
+    .secondary-button {
+      background: #eeeeee;
+      color: var(--black);
+    }
+
+    .secondary-button:hover:not(:disabled) {
+      background: #dddddd;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .button-row button {
+      flex: 1;
+    }
+
+    .pin-field {
+      position: relative;
+    }
+
+    .scanner-box {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #111111;
+      min-height: 100px;
+    }
+
+    #reader {
+      width: 100%;
+    }
+
+    #reader video {
+      border-radius: 12px;
+    }
+
+    #reader__dashboard_section_csr button {
+      background: var(--red) !important;
+      color: white !important;
+      border: none !important;
+      border-radius: 7px !important;
+      padding: 9px 14px !important;
+      font-weight: 700 !important;
+    }
+
+    .scanner-placeholder {
+      text-align: center;
+      padding: 35px 15px;
+      color: #aaaaaa;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .scanner-placeholder strong {
+      display: block;
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    .scanner-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .scanner-actions button {
+      flex: 1;
+    }
+
+    .status {
+      display: none;
+      margin-top: 18px;
+      padding: 15px 16px;
+      border-radius: 9px;
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .status.success {
+      display: block;
+      background: var(--green-light);
+      color: #12683a;
+      border: 1px solid #bce5cb;
+    }
+
+    .status.error {
+      display: block;
+      background: var(--red-light);
+      color: #b00020;
+      border: 1px solid #ffd0d7;
+    }
+
+    .status.info {
+      display: block;
+      background: #f0f4ff;
+      color: #244c91;
+      border: 1px solid #d7e2ff;
+    }
+
+    .attendee-card {
+      display: none;
+      margin-top: 18px;
+      padding: 20px;
+      border: 1px solid #bce5cb;
+      border-radius: 12px;
+      background: var(--green-light);
+    }
+
+    .attendee-card.visible {
+      display: block;
+    }
+
+    .attendee-card h3 {
+      color: var(--green);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 15px;
+    }
+
+    .attendee-name {
+      font-size: 23px;
+      font-weight: 900;
+      margin-bottom: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .attendee-detail {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 9px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      font-size: 13px;
+    }
+
+    .attendee-detail span:first-child {
+      color: #52705d;
+    }
+
+    .attendee-detail span:last-child {
+      font-weight: 700;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .manual-toggle {
+      display: block;
+      margin: 22px auto 0;
+      background: none;
+      color: var(--red);
+      min-height: auto;
+      padding: 8px;
+      font-size: 13px;
+      text-decoration: underline;
+    }
+
+    .manual-section {
+      display: none;
+      margin-top: 18px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .manual-section.visible {
+      display: block;
+    }
+
+    .manual-section .primary-button {
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .security-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 18px;
+    }
+
+    footer {
+      background: var(--black);
+      color: #aaaaaa;
+      padding: 24px 7%;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    footer span {
+      color: var(--red);
+    }
+
+    @media (max-width: 600px) {
+      header {
+        height: 66px;
+        padding: 0 20px;
+      }
+
+      .logo {
+        font-size: 19px;
+      }
+
+      .header-label {
+        font-size: 9px;
+        letter-spacing: 1px;
+      }
+
+      main {
+        padding: 38px 16px 50px;
+      }
+
+      .panel {
+        padding: 20px 17px;
+      }
+
+      .button-row,
+      .scanner-actions {
+        flex-direction: column;
+      }
+
+      .button-row button,
+      .scanner-actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">TED<span>x</span>AASTMT</div>
+    <div class="header-label">Organizer Portal</div>
+  </header>
+
+  <main>
+
+    <div class="eyebrow">TEDxAASTMT 2026</div>
+    <h1>Attendee<br>Check-in.</h1>
+    <p class="intro">
+      Scan the attendee's ticket QR code to verify their registration
+      and record their attendance.
+    </p>
+
+    <!-- ORGANIZER AUTHENTICATION -->
+    <section class="panel">
+      <h2 class="section-title">Organizer verification</h2>
+      <p class="section-description">
+        Enter the organizer PIN before scanning tickets.
+      </p>
+
+      <label for="organizerPin">Organizer PIN</label>
+      <div class="pin-field">
+        <input
+          id="organizerPin"
+          type="password"
+          placeholder="Enter organizer PIN"
+          autocomplete="off"
+          required
+        >
+      </div>
+
+      <p class="field-note">
+        Your PIN is used only for check-in requests and is not saved in this browser.
+      </p>
+    </section>
+
+    <!-- QR SCANNER -->
+    <section class="panel">
+      <h2 class="section-title">Scan attendee ticket</h2>
+      <p class="section-description">
+        Position the QR code inside the camera frame. The system will
+        verify the ticket and record the check-in automatically.
+      </p>
+
+      <div class="scanner-box">
+        <div id="reader">
+          <div class="scanner-placeholder" id="scannerPlaceholder">
+            <strong>▦</strong>
+            Camera is not active.<br>
+            Press Start Scanner to begin.
+          </div>
+        </div>
+      </div>
+
+      <div class="scanner-actions">
+        <button
+          type="button"
+          class="primary-button"
+          id="startButton"
+          onclick="startScanner()"
+        >
+          Start Scanner
+        </button>
+
+        <button
+          type="button"
+          class="secondary-button"
+          id="stopButton"
+          onclick="stopScanner()"
+          disabled
+        >
+          Stop Camera
+        </button>
+      </div>
+
+      <div id="statusMessage" class="status" role="status" aria-live="polite"></div>
+
+      <div id="attendeeCard" class="attendee-card">
+        <h3>✓ Check-in successful</h3>
+        <div id="attendeeName" class="attendee-name"></div>
+
+        <div class="attendee-detail">
+          <span>Registration number</span>
+          <span id="attendeeRegno"></span>
+        </div>
+
+        <div class="attendee-detail">
+          <span>Email</span>
+          <span id="attendeeEmail"></span>
+        </div>
+
+        <div class="attendee-detail">
+          <span>Branch</span>
+          <span id="attendeeBranch"></span>
+        </div>
+      </div>
+
+      <p class="security-note">
+        A successful check-in is recorded in the spreadsheet assigned to
+        the attendee's branch. Each registration number can only check in once.
+      </p>
+    </section>
+
+    <!-- MANUAL TOKEN ENTRY -->
+    <section class="panel">
+      <h2 class="section-title">Manual ticket entry</h2>
+      <p class="section-description">
+        If an attendee's QR code cannot be scanned, you can enter the
+        ticket token manually.
+      </p>
+
+      <button
+        type="button"
+        class="manual-toggle"
+        id="manualToggle"
+        onclick="toggleManualEntry()"
+      >
+        Open manual entry
+      </button>
+
+      <div class="manual-section" id="manualSection">
+        <label for="manualToken">Ticket token</label>
+        <input
+          id="manualToken"
+          type="text"
+          placeholder="Paste the complete ticket token"
+          autocomplete="off"
+          spellcheck="false"
+        >
+
+        <button
+          type="button"
+          class="primary-button"
+          id="manualSubmit"
+          onclick="submitManualToken()"
+        >
+          Verify and Check In
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="foot-inner">
+      <a class="wordmark" href="/" aria-label="TEDxAASTMT"><span class="red">TED</span><span class="red">x</span>AASTMT</a>
+
+      <ul class="socials">
+        <li>
+          <a href="https://www.instagram.com/tedxaastmt/" target="_blank" rel="noopener noreferrer" aria-label="TEDxAASTMT on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+            </svg>
+            Instagram
+          </a>
+        </li>
+        <li>
+          <a href="https://chat.whatsapp.com/CysEmqA07HfLkWu6Xxqxq0" target="_blank" rel="noopener noreferrer" aria-label="Join the WhatsApp group">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.52 3.48A11.8 11.8 0 0 0 12.1 0C5.56 0 .23 5.32.23 11.87c0 2.1.55 4.15 1.6 5.96L.13 24l6.33-1.66a11.9 11.9 0 0 0 5.63 1.43h.01c6.55 0 11.87-5.32 11.87-11.87 0-3.17-1.23-6.15-3.45-8.42ZM12.1 21.75h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.76.99 1-3.67-.24-.38a9.83 9.83 0 0 1-1.51-5.23c0-5.47 4.45-9.92 9.93-9.92 2.65 0 5.14 1.03 7.01 2.91a9.87 9.87 0 0 1 2.9 7.02c0 5.47-4.45 9.92-9.92 9.92Zm5.44-7.43c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.67-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
+            </svg>
+            WhatsApp
+          </a>
+        </li>
+        <li>
+          <a href="mailto:tedxaastmt26@gmail.com" aria-label="Email TEDxAASTMT">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2.5" y="4.5" width="19" height="15" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="m3.5 6 8.5 7 8.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Email
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="legal">
+      <span>This independent TEDx event is operated under license from TED.</span>
+      <span>Made by Razan AlOraby</span>
+    </div>
+  </footer>
+
+
+  <script>
+    const API_BASE = window.location.origin;
+    const CHECKIN_ENDPOINT = `${API_BASE}/checkin`;
+
+    let scanner = null;
+    let scannerRunning = false;
+    let processingScan = false;
+    let lastScannedToken = "";
+
+    const pinInput = document.getElementById("organizerPin");
+    const startButton = document.getElementById("startButton");
+    const stopButton = document.getElementById("stopButton");
+    const statusMessage = document.getElementById("statusMessage");
+    const attendeeCard = document.getElementById("attendeeCard");
+    const scannerPlaceholder = document.getElementById("scannerPlaceholder");
+
+    function showStatus(message, type = "info") {
+      statusMessage.textContent = message;
+      statusMessage.className = `status ${type}`;
+    }
+
+    function clearStatus() {
+      statusMessage.textContent = "";
+      statusMessage.className = "status";
+    }
+
+    function hideAttendee() {
+      attendeeCard.classList.remove("visible");
+    }
+
+    function showAttendee(registration) {
+      document.getElementById("attendeeName").textContent =
+        registration.name || "Attendee";
+
+      document.getElementById("attendeeRegno").textContent =
+        registration.registration_number || "—";
+
+      document.getElementById("attendeeEmail").textContent =
+        registration.email || "—";
+
+      document.getElementById("attendeeBranch").textContent =
+        registration.branch || "—";
+
+      attendeeCard.classList.add("visible");
+    }
+
+    function getTicketToken(decodedText) {
+      const value = String(decodedText || "").trim();
+
+      // Support QR codes containing a raw signed token.
+      if (value.includes(".")) {
+        return value;
+      }
+
+      // Also support QR codes containing a JSON object.
+      try {
+        const parsed = JSON.parse(value);
+
+        if (parsed.ticketToken) {
+          return String(parsed.ticketToken).trim();
+        }
+
+        if (parsed.token) {
+          return String(parsed.token).trim();
+        }
+      } catch (error) {
+        // Not JSON; handled by validation below.
+      }
+
+      return value;
+    }
+
+    function looksLikeSignedToken(token) {
+      const parts = token.split(".");
+
+      if (parts.length !== 2) return false;
+
+      // The Cloudflare registration endpoint creates a base64url
+      // payload followed by a base64url HMAC signature.
+      const base64urlPattern = /^[A-Za-z0-9_-]+$/;
+
+      return (
+        base64urlPattern.test(parts[0]) &&
+        base64urlPattern.test(parts[1])
+      );
+    }
+
+    async function sendCheckIn(token) {
+      const pin = pinInput.value.trim();
+
+      if (!pin) {
+        showStatus("Enter the organizer PIN first.", "error");
+        return;
+      }
+
+      token = getTicketToken(token);
+
+      if (!looksLikeSignedToken(token)) {
+        showStatus("Invalid QR code. This does not look like a valid TEDx ticket.", "error");
+        return;
+      }
+
+      clearStatus();
+      hideAttendee();
+
+      showStatus("Verifying ticket and recording check-in...", "info");
+
+      startButton.disabled = true;
+      stopButton.disabled = true;
+
+      try {
+        const response = await fetch(CHECKIN_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Checkin-Pin": pin
+          },
+          body: JSON.stringify({
+            ticketToken: token
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          const errorMessage = data.error || "Check-in could not be completed.";
+          showStatus(errorMessage, "error");
+          return;
+        }
+
+        const registration = data.registration || data.attendee || {};
+
+        showStatus(
+          data.message || "Attendee successfully checked in.",
+          "success"
+        );
+
+        if (registration.name || registration.registration_number) {
+          showAttendee(registration);
+        } else {
+          // The current Apps Script response may only return
+          // success, message and branch.
+          showAttendee({
+            name: "Attendance recorded",
+            registration_number: "Verified",
+            email: "—",
+            branch: data.branch || "—"
+          });
+        }
+
+      } catch (error) {
+        console.error("Check-in error:", error);
+        showStatus(
+          "Could not connect to the check-in server. Check your internet connection and try again.",
+          "error"
+        );
+      } finally {
+        startButton.disabled = false;
+        stopButton.disabled = !scannerRunning;
+      }
+    }
+
+    async function handleScan(decodedText) {
+      if (processingScan) return;
+
+      const token = getTicketToken(decodedText);
+
+      if (token === lastScannedToken) return;
+
+      processingScan = true;
+      lastScannedToken = token;
+
+      // Stop the camera after detecting a QR code.
+      await stopScanner();
+
+      await sendCheckIn(token);
+
+      processingScan = false;
+    }
+
+    async function startScanner() {
+      clearStatus();
+      hideAttendee();
+
+      if (!pinInput.value.trim()) {
+        showStatus("Enter the organizer PIN before starting the scanner.", "error");
+        pinInput.focus();
+        return;
+      }
+
+      if (typeof Html5Qrcode === "undefined") {
+        showStatus("The QR scanner library could not load. Check your internet connection and refresh the page.", "error");
+        return;
+      }
+
+      if (scannerRunning) return;
+
+      try {
+        scannerPlaceholder.style.display = "none";
+
+        scanner = new Html5Qrcode("reader");
+
+        await scanner.start(
+          { facingMode: "environment" },
+          {
+            fps: 10,
+            qrbox: {
+              width: 240,
+              height: 240
+            },
+            aspectRatio: 1
+          },
+          handleScan,
+          () => {
+            // Ignore individual frames without a QR code.
+          }
+        );
+
+        scannerRunning = true;
+        startButton.disabled = true;
+        stopButton.disabled = false;
+
+        showStatus("Camera active. Point it at an attendee's QR code.", "info");
+
+      } catch (error) {
+        console.error("Scanner start error:", error);
+
+        scannerRunning = false;
+        scanner = null;
+        scannerPlaceholder.style.display = "block";
+
+        startButton.disabled = false;
+        stopButton.disabled = true;
+
+        showStatus(
+          "Could not start the camera. Allow camera permission and make sure you are using HTTPS.",
+          "error"
+        );
+      }
+    }
+
+    async function stopScanner() {
+      if (!scanner) {
+        scannerRunning = false;
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        scannerPlaceholder.style.display = "block";
+        return;
+      }
+
+      try {
+        if (scannerRunning) {
+          await scanner.stop();
+        }
+
+        await scanner.clear();
+
+      } catch (error) {
+        console.warn("Scanner stop message:", error);
+
+      } finally {
+        scanner = null;
+        scannerRunning = false;
+
+        startButton.disabled = false;
+        stopButton.disabled = true;
+
+        scannerPlaceholder.style.display = "block";
+      }
+    }
+
+    function toggleManualEntry() {
+      const section = document.getElementById("manualSection");
+      const button = document.getElementById("manualToggle");
+
+      const isVisible = section.classList.toggle("visible");
+
+      button.textContent = isVisible
+        ? "Close manual entry"
+        : "Open manual entry";
+    }
+
+    async function submitManualToken() {
+      const input = document.getElementById("manualToken");
+      const button = document.getElementById("manualSubmit");
+      const token = input.value.trim();
+
+      if (!token) {
+        showStatus("Enter a ticket token first.", "error");
+        return;
+      }
+
+      button.disabled = true;
+
+      try {
+        await sendCheckIn(token);
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    // Allow Enter to submit a manually entered ticket.
+    document.getElementById("manualToken").addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        submitManualToken();
+      }
+    });
+
+    // Reset the duplicate-scan guard when the organizer starts
+    // a new scanning session.
+    startButton.addEventListener("click", () => {
+      lastScannedToken = "";
+    });
+
+    // Stop the camera when the page is being closed.
+    window.addEventListener("pagehide", () => {
+      if (scanner && scannerRunning) {
+        scanner.stop().catch(() => {});
+      }
+    });
+  </script>
+
+</body>
+</html>
