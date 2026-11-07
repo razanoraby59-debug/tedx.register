@@ -106,7 +106,7 @@
       height: 6px;
       margin-bottom: clamp(1.4rem, 3vw, 2rem);
       border-radius: 2px;
-      background: linear-gradient(90deg, var(--red) 0 84px, rgba(255, 255, 255, .2) 84px 100%);
+      background: linear-gradient(90deg, #EB0028 0 84px, rgba(255, 255, 255, .2) 84px 100%);
     }
 
     .hero h1 {
@@ -115,7 +115,7 @@
       line-height: .93;
       letter-spacing: -.055em;
     }
-    .hero h1 em { font-style: normal; color: var(--red); }
+    .hero h1 em { font-style: normal; color: #EB0028; }
 
     .perks {
       list-style: none;
@@ -140,7 +140,7 @@
       content: "";
       width: .42rem; height: .42rem;
       border-radius: 50%;
-      background: var(--red);
+      background: #EB0028;
     }
 
     /* ---------- form panel ---------- */
@@ -159,7 +159,7 @@
       position: absolute;
       inset: 0 0 auto 0;
       height: 6px;
-      background: var(--red);
+      background: #EB0028;
     }
     .panel h2 {
       font-family: var(--display);
@@ -227,7 +227,7 @@
       padding: 1rem 1.4rem;
       border-radius: 12px;
       border: 2px solid var(--red);
-      background: var(--red);
+      background: #EB0028;
       color: #fff;
       font-weight: 800;
       font-size: 1rem;
@@ -275,60 +275,69 @@
     .ticket {
       --notch: var(--page);
       width: 100%;
-      max-width: 560px;
+      max-width: 400px;
       margin: 0 auto;
       background: var(--paper);
       color: var(--ink);
-      border-radius: 24px;
+      border-radius: 26px;
       overflow: hidden;
-      box-shadow: 0 40px 90px rgba(0, 0, 0, .6);
+      box-shadow: 0 40px 90px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255, 255, 255, .06);
     }
-    .t-head {
+
+    /* top: brand + QR code */
+    .t-top {
       position: relative;
-      padding: clamp(1.3rem, 4vw, 1.9rem);
+      padding: 1.3rem 1.4rem 1.6rem;
       background: var(--red);
       color: #fff;
+      text-align: center;
       overflow: hidden;
     }
-    .t-head::after {
+    .t-top::after {
       content: "x";
       position: absolute;
-      right: -.5rem; bottom: -3.2rem;
+      right: -1.4rem; bottom: -4.6rem;
       font-family: var(--display);
-      font-size: 11rem;
+      font-size: 14rem;
       line-height: 1;
-      color: rgba(0, 0, 0, .14);
+      color: rgba(0, 0, 0, .13);
       pointer-events: none;
     }
-    .t-row { display: flex; justify-content: space-between; align-items: center; gap: .8rem; flex-wrap: wrap; position: relative; z-index: 1; }
-    .t-row .wordmark { font-size: 1.2rem; }
+    .t-row { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: .8rem; }
+    .t-row .wordmark { font-size: 1.15rem; }
     .t-row .wordmark .red { color: #fff; }
     .t-badge {
-      font-size: .66rem;
+      font-size: .64rem;
       font-weight: 800;
       letter-spacing: .18em;
       text-transform: uppercase;
-      padding: .35rem .7rem;
-      border: 1.5px solid rgba(255, 255, 255, .8);
+      padding: .32rem .65rem;
+      border: 1.5px solid rgba(255, 255, 255, .85);
       border-radius: 6px;
     }
-    .t-eyebrow {
+    .t-qr {
       position: relative; z-index: 1;
-      margin-top: 1.8rem;
-      font-size: .68rem; font-weight: 800; letter-spacing: .22em; text-transform: uppercase;
-      color: rgba(255, 255, 255, .8);
+      width: fit-content;
+      margin: 1.4rem auto 0;
+      padding: .9rem;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 16px 34px rgba(0, 0, 0, .28);
     }
-    .t-head h3 {
+    #qr { width: 196px; height: 196px; display: flex; align-items: center; justify-content: center; }
+    #qr img, #qr canvas { display: block; width: 196px !important; height: 196px !important; }
+    .qr-fail { width: 196px; font-size: .8rem; line-height: 1.4; text-align: center; color: #555; overflow-wrap: anywhere; }
+    .t-scan {
       position: relative; z-index: 1;
-      margin-top: .3rem;
-      font-family: var(--display);
-      font-size: clamp(1.7rem, 5.5vw, 2.5rem);
-      line-height: 1;
-      letter-spacing: -.05em;
-      overflow-wrap: anywhere;
+      margin-top: 1rem;
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .92);
     }
-    .t-meta { position: relative; z-index: 1; margin-top: .7rem; font-size: .88rem; font-weight: 600; color: rgba(255, 255, 255, .92); }
 
+    /* tear line */
     .t-tear { position: relative; height: 0; border-top: 2px dashed #c9c4bb; margin: 0 1.2rem; }
     .t-tear::before, .t-tear::after {
       content: ""; position: absolute; top: -14px;
@@ -338,37 +347,42 @@
     .t-tear::before { left: calc(-1.2rem - 14px); }
     .t-tear::after { right: calc(-1.2rem - 14px); }
 
-    .t-body {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 1.5rem;
-      align-items: center;
-      padding: clamp(1.3rem, 4vw, 1.9rem);
+    /* bottom: attendee details */
+    .t-info { padding: 1.6rem 1.6rem 1.7rem; }
+    .t-eyebrow { font-size: .64rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #77777e; }
+    .t-info h3 {
+      margin-top: .3rem;
+      font-family: var(--display);
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      line-height: 1.05;
+      letter-spacing: -.045em;
+      overflow-wrap: anywhere;
     }
-    .t-details { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1rem; min-width: 0; }
+    .t-meta { margin-top: .55rem; font-size: .86rem; font-weight: 600; color: #5b5b62; }
+
+    .t-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.05rem 1rem;
+      margin-top: 1.3rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #e4e0da;
+      min-width: 0;
+    }
     .t-details .full { grid-column: 1 / -1; }
     .t-details div { min-width: 0; }
     .t-details dt { font-size: .62rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #77777e; margin-bottom: .15rem; }
     .t-details dd { font-weight: 800; font-size: .98rem; overflow-wrap: anywhere; line-height: 1.3; }
-    .t-details dd.tid { color: var(--red-deep); letter-spacing: .06em; font-size: 1.08rem; }
-
-    .t-qr {
-      display: flex; flex-direction: column; align-items: center; gap: .55rem;
-      padding: .8rem; border-radius: 14px; background: #fff; border: 1px solid #e4e0da;
-    }
-    #qr { width: 168px; height: 168px; display: flex; align-items: center; justify-content: center; }
-    #qr img, #qr canvas { display: block; width: 168px !important; height: 168px !important; }
-    .t-qr small { font-size: .6rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #444; }
-    .qr-fail { width: 168px; font-size: .78rem; line-height: 1.4; text-align: center; color: #555; overflow-wrap: anywhere; }
+    .t-details dd.tid { color: var(--red-deep); letter-spacing: .07em; font-size: 1.1rem; }
 
     .t-foot {
-      display: flex; justify-content: space-between; gap: .5rem 1rem; flex-wrap: wrap;
-      padding: .85rem clamp(1.3rem, 4vw, 1.9rem);
+      display: flex; justify-content: space-between; gap: .4rem 1rem; flex-wrap: wrap;
+      padding: .85rem 1.6rem;
       background: var(--ink); color: #fff;
-      font-size: .66rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+      font-size: .62rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
     }
 
-    .t-actions { display: flex; gap: .7rem; flex-wrap: wrap; max-width: 560px; margin: 1.5rem auto 0; }
+    .t-actions { display: flex; gap: .7rem; flex-wrap: wrap; max-width: 400px; margin: 1.5rem auto 0; }
     .t-actions .btn { flex: 1 1 180px; padding: .85rem 1rem; font-size: .95rem; }
 
     .t-note { max-width: 480px; margin: 1.1rem auto 0; text-align: center; font-size: .85rem; color: #a9a9b0; }
@@ -424,8 +438,6 @@
       main { grid-template-columns: 1fr; align-items: start; }
     }
     @media (max-width: 560px) {
-      .t-body { grid-template-columns: 1fr; }
-      .t-qr { width: min(100%, 220px); margin: 0 auto; }
       .t-actions .btn { flex-basis: 100%; }
       .pill { display: none; }
       .foot-inner { flex-direction: column; align-items: flex-start; }
@@ -514,34 +526,32 @@
     <section class="ticket-view" id="ticket-view" tabindex="-1" aria-live="polite">
       <div class="tv-head">
         <h2 id="tv-title">You're in.</h2>
-        <p>Show this QR code at the entrance.</p>
+        <p>Screenshot or save this page as it will be deleted once closed.</p>
       </div>
 
       <article class="ticket" aria-label="Your TEDxAASTMT ticket">
-        <div class="t-head">
+        <div class="t-top">
           <div class="t-row">
             <span class="wordmark"><span class="red">TED</span><span class="red">x</span>AASTMT</span>
             <span class="t-badge">Admit one</span>
           </div>
-          <p class="t-eyebrow">Attendee</p>
-          <h3 id="tk-name"></h3>
-          <p class="t-meta"><span id="tk-date"></span> &middot; <span id="tk-place"></span></p>
+          <div class="t-qr"><div id="qr"></div></div>
+          <p class="t-scan">Scan at the entrance</p>
         </div>
 
         <div class="t-tear" aria-hidden="true"></div>
 
-        <div class="t-body">
+        <div class="t-info">
+          <p class="t-eyebrow">Attendee</p>
+          <h3 id="tk-name"></h3>
+          <p class="t-meta"><span id="tk-date"></span> &middot; <span id="tk-place"></span></p>
+
           <dl class="t-details">
             <div><dt>Registration no.</dt><dd id="tk-regno"></dd></div>
             <div><dt>Branch</dt><dd id="tk-branch"></dd></div>
             <div class="full"><dt>Email</dt><dd id="tk-email"></dd></div>
             <div class="full"><dt>Ticket ID</dt><dd class="tid" id="tk-id"></dd></div>
           </dl>
-
-          <div class="t-qr">
-            <div id="qr"></div>
-            <small>Scan at the entrance</small>
-          </div>
         </div>
 
         <div class="t-foot">
@@ -718,7 +728,7 @@
         if (typeof QRCode === "undefined") throw new Error("QR library could not be loaded");
 
         new QRCode(box, {
-          text: value, width: 168, height: 168,
+          text: value, width: 196, height: 196,
           colorDark: "#000000", colorLight: "#ffffff",
           correctLevel: QRCode.CorrectLevel.M
         });
