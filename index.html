@@ -549,6 +549,36 @@
       .t-actions .btn { flex-basis: 100%; }
       .pill { display: none; }
       .foot-inner { flex-direction: column; align-items: flex-start; }
+
+      /* perks: keep all three on one row */
+      .perks { flex-wrap: nowrap; gap: .3rem; }
+      .perks li {
+        flex: 1 1 0;
+        justify-content: center;
+        padding: .55rem .25rem;
+        font-size: clamp(.56rem, 2.9vw, .82rem);
+      }
+      .perks li::before { display: none; }
+
+      /* footer socials: keep all three on one row */
+      .socials { width: 100%; flex-wrap: nowrap; gap: .4rem; }
+      .socials li { flex: 1 1 0; min-width: 0; }
+      .socials a {
+        width: 100%;
+        justify-content: center;
+        gap: .35rem;
+        padding: .55rem .25rem;
+        font-size: clamp(.62rem, 2.8vw, .86rem);
+        white-space: nowrap;
+      }
+      .socials svg { width: 17px; height: 17px; }
+
+      /* license sentence: one line on phones */
+      .legal { flex-direction: column; gap: .4rem; }
+      .legal span:first-child {
+        font-size: clamp(.5rem, 2.35vw, .78rem);
+        white-space: nowrap;
+      }
     }
     @media (max-width: 360px) {
       .t-details { grid-template-columns: 1fr; }
@@ -634,7 +664,7 @@
     <section class="ticket-view" id="ticket-view" tabindex="-1" aria-live="polite">
       <div class="tv-head">
         <h2 id="tv-title">You're in.</h2>
-        <p>Make sure to screenshot or save this ticket as it WILL be lost.</p>
+        <p>Show this QR code at the entrance.</p>
       </div>
 
       <article class="ticket" aria-label="Your TEDxAASTMT ticket">
@@ -663,6 +693,7 @@
         </div>
 
         <div class="t-foot">
+          <span>TEDxAASTMT 2026</span>
           <span>Free entry &middot; One scan per ticket</span>
         </div>
       </article>
@@ -672,6 +703,7 @@
         <button class="btn ghost" type="button" id="download-qr" disabled>Download QR</button>
       </div>
 
+      <p class="t-note">Saved on this device. Take a screenshot too.</p>
     </section>
   </main>
 
