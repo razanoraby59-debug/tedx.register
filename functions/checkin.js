@@ -1,9 +1,6 @@
 
 function decodeBase64Url(value) {
-  const base64 = value
-    .replace(/-/g, "+")
-    .replace(/_/g, "/");
-
+  const base64 = value.replace(/-/g, "+").replace(/_/g, "/");
   const padded = base64 + "=".repeat((4 - base64.length % 4) % 4);
   const binary = atob(padded);
 
@@ -29,6 +26,16 @@ async function verifyTicket(payload, signature, secret) {
 
 export async function onRequestPost({ request, env }) {
   try {
+    // Organizer authentication
+    const suppliedPin = request.headers.get("X-Checkin-Pin");
+
+    if (!env.CHECKIN_PIN || suppliedPin !== env.CHECKIN_PIN) {
+      return Response.json(
+        { success: false, error: "Unauthorized organizer." },
+        { status: 401 }
+      );
+    }
+
     if (!env.APPS_SCRIPT_URL || !env.APPS_SCRIPT_SECRET) {
       return Response.json(
         { success: false, error: "Check-in service is not configured." },
