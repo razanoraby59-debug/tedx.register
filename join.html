@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Join the team | TEDxAASTMT</title>
+  <meta name="description" content="Apply to join the TEDxAASTMT team. Pick a team, tell us about yourself and send your application.">
+  <meta name="theme-color" content="#0b0b0c">
+
+  <style>
+    :root {
+      --page: #0b0b0c;
+      --paper: #f7f5f2;
+      --ink: #111;
+      --muted: #8d8d94;
+      --red: #EB0028;
+      --red-deep: #b81d12;
+      --line: rgba(255, 255, 255, .12);
+      --display: "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+      --gutter: clamp(1.1rem, 4vw, 2.5rem);
+      --wrap: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: var(--body);
+      color: #fff;
+      line-height: 1.55;
+      background:
+        radial-gradient(60rem 38rem at 85% -10%, rgba(235, 0, 40, .30), transparent 60%),
+        radial-gradient(40rem 30rem at -10% 45%, rgba(235, 0, 40, .12), transparent 60%),
+        var(--page);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+    .red { color: var(--red); }
+
+    .wordmark {
+      font-family: var(--display);
+      font-size: 1.35rem;
+      letter-spacing: -.05em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .wordmark .red { font-size: 1.05em; }
+
+    /* ---------- header ---------- */
+    .top { border-bottom: 1px solid var(--line); }
+    .top-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: var(--wrap);
+      margin: 0 auto;
+      padding: 1.1rem var(--gutter);
+    }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .45rem .9rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #d6d6db;
+      background: rgba(255, 255, 255, .04);
+      white-space: nowrap;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .back:hover { background: var(--red); border-color: var(--red); color: #fff; }
+
+    /* ---------- stage ---------- */
+    main {
+      flex: 1;
+      max-width: var(--wrap);
+      width: 100%;
+      margin: 0 auto;
+      padding: clamp(2rem, 6vw, 4.5rem) var(--gutter) clamp(3rem, 8vw, 6rem);
+      display: grid;
+      gap: clamp(2.6rem, 7vw, 5rem);
+    }
+
+    .rule {
+      height: 6px;
+      margin-bottom: clamp(1.4rem, 3vw, 2rem);
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--red) 0 84px, rgba(255, 255, 255, .2) 84px 100%);
+    }
+
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 8.2vw, 5.9rem);
+      line-height: .93;
+      letter-spacing: -.055em;
+    }
+    .hero h1 em { font-style: normal; color: var(--red); }
+    .lede {
+      max-width: 62ch;
+      margin-top: clamp(1.2rem, 3vw, 1.7rem);
+      color: #c9c9cf;
+      font-size: clamp(.98rem, 1.6vw, 1.08rem);
+    }
+
+    /* ---------- section heading ---------- */
+    .sec-head { margin-bottom: clamp(1.4rem, 3vw, 2rem); }
+    .sec-head .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #ff97a6;
+    }
+    .sec-head .kicker::before {
+      content: "";
+      width: .42rem; height: .42rem;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 4px rgba(235, 0, 40, .22);
+    }
+    .sec-head h2 {
+      margin-top: .55rem;
+      font-family: var(--display);
+      font-size: clamp(1.9rem, 5vw, 2.9rem);
+      letter-spacing: -.05em;
+      line-height: 1;
+    }
+
+    /* ---------- team cards ---------- */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(.9rem, 2vw, 1.3rem);
+    }
+
+    .team-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 24px;
+      padding: 1.7rem 1.6rem 1.6rem;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, .45), 0 0 0 1px rgba(255, 255, 255, .06);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .team-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 6px;
+      background: var(--red);
+    }
+    .team-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 40px 90px rgba(0, 0, 0, .55), 0 18px 44px rgba(235, 0, 40, .18);
+    }
+
+    .team-num {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      padding: .3rem .6rem;
+      border-radius: 999px;
+      background: rgba(235, 0, 40, .07);
+      border: 1px solid rgba(235, 0, 40, .2);
+      font-family: var(--display);
+      font-size: .68rem;
+      letter-spacing: .18em;
+      color: var(--red);
+    }
+    .team-card h3 {
+      margin-top: .95rem;
+      font-family: var(--display);
+      font-size: 1.45rem;
+      line-height: 1.05;
+      letter-spacing: -.045em;
+    }
+    .team-card > p {
+      margin-top: .55rem;
+      font-size: .93rem;
+      color: #5b5b62;
+    }
+    .team-card ul {
+      list-style: none;
+      display: grid;
+      gap: .5rem;
+      margin-top: 1.1rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid #e2ddd4;
+    }
+    .team-card li {
+      position: relative;
+      padding-left: 1.05rem;
+      font-size: .89rem;
+      font-weight: 600;
+      color: #333;
+    }
+    .team-card li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: .58em;
+      width: .4rem; height: .4rem;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .card-btn {
+      margin-top: auto;
+      padding-top: 1.2rem;
+    }
+    .card-btn button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: .72rem .6rem;
+      border-radius: 10px;
+      border: 2px solid #e3ded5;
+      background: #fff;
+      color: var(--ink);
+      font-size: .8rem;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .card-btn button:hover { background: var(--red); border-color: var(--red); color: #fff; }
+
+    /* ---------- apply panel ---------- */
+    .apply-panel {
+      position: relative;
+      scroll-margin-top: 1.5rem;
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 24px;
+      padding: clamp(1.6rem, 4vw, 2.5rem);
+      box-shadow: 0 40px 90px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .06);
+      overflow: hidden;
+    }
+    .apply-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 6px;
+      background: var(--red);
+    }
+    .apply-panel h2 {
+      font-family: var(--display);
+      font-size: clamp(1.7rem, 3.6vw, 2.3rem);
+      letter-spacing: -.045em;
+      line-height: 1.03;
+    }
+    .apply-panel .sub {
+      margin: .55rem 0 1.7rem;
+      max-width: 62ch;
+      font-size: .95rem;
+      color: #5b5b62;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 1rem;
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+
+    .field { margin-bottom: 1.15rem; min-width: 0; }
+    .lbl {
+      display: block;
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #333;
+      margin-bottom: .45rem;
+    }
+    input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+      width: 100%;
+      font: inherit;
+      font-size: 1rem;
+      padding: .9rem 1rem;
+      border-radius: 12px;
+      border: 2px solid #dcd8d2;
+      background: #fff;
+      color: var(--ink);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    textarea { min-height: 140px; resize: vertical; line-height: 1.5; }
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 2.8rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      cursor: pointer;
+    }
+    input[type="text"]:hover, input[type="email"]:hover, input[type="tel"]:hover,
+    select:hover, textarea:hover { border-color: #bdb8b0; }
+    input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus,
+    select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(235, 0, 40, .16);
+    }
+    input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"] {
+      border-color: var(--red-deep);
+      background: #fff6f5;
+    }
+
+    .hint { font-size: .78rem; color: #6c6c73; margin-top: .3rem; }
+    .error { font-size: .82rem; font-weight: 700; color: var(--red-deep); min-height: 1.15em; margin-top: .25rem; }
+
+    /* file picker */
+    .file-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .8rem;
+    }
+    .file-input {
+      position: absolute;
+      width: 1px; height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .file-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: .72rem 1.1rem;
+      border-radius: 10px;
+      border: 2px solid #dcd8d2;
+      background: #fff;
+      color: var(--ink);
+      font-size: .9rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .file-btn:hover { border-color: var(--red); color: var(--red); }
+    .file-input:focus-visible + .file-btn { outline: 3px solid var(--red); outline-offset: 2px; }
+    .file-name {
+      font-size: .88rem;
+      font-weight: 600;
+      color: #6c6c73;
+      overflow-wrap: anywhere;
+    }
+
+    .notice {
+      display: none;
+      margin-bottom: 1.1rem;
+      padding: .85rem 1rem;
+      border-radius: 12px;
+      background: #fdeceb;
+      border: 1px solid #f3b9b5;
+      color: var(--red-deep);
+      font-size: .9rem;
+      font-weight: 600;
+    }
+    .notice.show { display: block; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      padding: 1rem 1.4rem;
+      border-radius: 12px;
+      border: 2px solid var(--red);
+      background: var(--red);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background .15s, transform .15s, border-color .15s;
+    }
+    .btn:hover { background: var(--red-deep); border-color: var(--red-deep); }
+    .btn:active { transform: translateY(1px); }
+    .btn.block { width: 100%; margin-top: .4rem; }
+    .btn[disabled] { opacity: .6; cursor: not-allowed; }
+
+    /* success state */
+    .done { text-align: center; padding: clamp(1rem, 3vw, 2rem) 0 .5rem; }
+    .done[hidden] { display: none; }
+    .done-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 14px 30px rgba(235, 0, 40, .32);
+      color: #fff;
+    }
+    .done-icon svg { width: 30px; height: 30px; }
+    .done h2 {
+      margin-top: 1.2rem;
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      letter-spacing: -.045em;
+      line-height: 1.03;
+    }
+    .done p {
+      max-width: 52ch;
+      margin: 0.7rem auto 0;
+      font-size: .95rem;
+      color: #5b5b62;
+    }
+    .done .btn { margin-top: 1.6rem; }
+
+    /* ---------- footer ---------- */
+    footer {
+      background: #060607;
+      border-top: 1px solid var(--line);
+    }
+    .foot-inner {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      padding: 1.8rem var(--gutter);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem 2rem;
+      flex-wrap: wrap;
+    }
+
+    .socials { display: flex; flex-wrap: wrap; gap: .6rem; list-style: none; }
+    .socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .55rem 1rem .55rem .8rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .04);
+      color: #fff;
+      font-size: .86rem;
+      font-weight: 700;
+      transition: background .15s, border-color .15s, transform .15s;
+    }
+    .socials a:hover { background: var(--red); border-color: var(--red); transform: translateY(-2px); }
+    .socials svg { width: 20px; height: 20px; flex: none; }
+
+    .legal {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      padding: 1.1rem var(--gutter) 1.6rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: .3rem 2rem;
+      flex-wrap: wrap;
+      font-size: .78rem;
+      color: #8a8a91;
+    }
+
+    .optional {
+  font-weight: 400;
+  letter-spacing: .03em;
+}
+
+
+/* ---------- responsive ---------- */
+@media (max-width: 1080px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Header */
+  .top-inner {
+    padding: .9rem var(--gutter);
+    gap: .6rem;
+  }
+
+  .wordmark {
+    font-size: 1.12rem;
+  }
+
+  .back {
+    font-size: .65rem;
+    letter-spacing: .07em;
+    padding: .4rem .7rem;
+  }
+
+  /* Main layout */
+  main {
+    padding: 2rem var(--gutter) 3.5rem;
+    gap: 2.8rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.15rem, 9vw, 3.2rem);
+    line-height: .98;
+  }
+
+  .lede {
+    font-size: .94rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+
+  .rule {
+    height: 5px;
+    margin-bottom: 1.3rem;
+  }
+
+  /* Section headings */
+  .sec-head {
+    margin-bottom: 1.2rem;
+  }
+
+  .sec-head h2 {
+    font-size: 2rem;
+  }
+
+  /* Team cards */
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .team-card {
+    padding: 1.4rem 1.3rem 1.3rem;
+    border-radius: 18px;
+  }
+
+  .team-card h3 {
+    font-size: 1.35rem;
+  }
+
+  .team-card > p {
+    font-size: .9rem;
+  }
+
+  .team-card li {
+    font-size: .86rem;
+  }
+
+  .card-btn {
+    padding-top: 1rem;
+  }
+
+  .card-btn button {
+    padding: .75rem .5rem;
+    font-size: .78rem;
+  }
+
+  /* Application form */
+  .apply-panel {
+    padding: 1.35rem 1.1rem;
+    border-radius: 18px;
+  }
+
+  .apply-panel h2 {
+    font-size: 1.8rem;
+  }
+
+  .apply-panel .sub {
+    font-size: .88rem;
+    line-height: 1.55;
+    margin-bottom: 1.4rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .field {
+    margin-bottom: 1rem;
+  }
+
+  .lbl {
+    font-size: .7rem;
+    margin-bottom: .4rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    font-size: 16px;
+    padding: .8rem .85rem;
+    border-radius: 10px;
+  }
+
+  textarea {
+    min-height: 120px;
+  }
+
+  .hint {
+    font-size: .74rem;
+  }
+
+  .error {
+    font-size: .78rem;
+  }
+
+  /* Upload field */
+  .file-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .65rem;
+  }
+
+  .file-btn {
+    flex: 0 0 auto;
+    padding: .7rem .9rem;
+    font-size: .82rem;
+  }
+
+  .file-name {
+    flex: 1 1 120px;
+    min-width: 0;
+    font-size: .78rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Submit button */
+  .btn {
+    padding: .9rem 1rem;
+    font-size: .92rem;
+  }
+
+  /* Footer */
+  .foot-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .socials {
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: .35rem;
+  }
+
+  .socials li {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .socials a {
+    width: 100%;
+    justify-content: center;
+    gap: .3rem;
+    padding: .55rem .2rem;
+    font-size: clamp(.6rem, 2.8vw, .8rem);
+    white-space: nowrap;
+  }
+
+  .socials svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .legal {
+    flex-direction: column;
+    gap: .4rem;
+    padding-top: 1rem;
+  }
+
+  .legal span:first-child {
+    font-size: clamp(.5rem, 2.35vw, .78rem);
+    white-space: nowrap;
+  }
+
+  .legal span:last-child {
+    font-size: .78rem;
+  }
+}
+
+/* Extra adjustments for very narrow phones */
+@media (max-width: 360px) {
+  :root {
+    --gutter: 1rem;
+  }
+
+  .wordmark {
+    font-size: 1rem;
+  }
+
+  .back {
+    font-size: .59rem;
+    padding: .38rem .55rem;
+  }
+
+  .hero h1 {
+    font-size: 2.05rem;
+  }
+
+  .apply-panel {
+    padding: 1.2rem .9rem;
+  }
+
+  .socials a {
+    font-size: .58rem;
+    gap: .2rem;
+  }
+
+  .socials svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+      /* footer socials: keep all three on one row */
+      .socials { width: 100%; flex-wrap: nowrap; gap: .4rem; }
+      .socials li { flex: 1 1 0; min-width: 0; }
+      .socials a {
+        width: 100%;
+        justify-content: center;
+        gap: .35rem;
+        padding: .55rem .25rem;
+        font-size: clamp(.62rem, 2.8vw, .86rem);
+        white-space: nowrap;
+      }
+      .socials svg { width: 17px; height: 17px; }
+
+      /* license sentence: one line on phones */
+      .legal { flex-direction: column; gap: .4rem; }
+      .legal span:first-child {
+        font-size: clamp(.5rem, 2.35vw, .78rem);
+        white-space: nowrap;
+      }
+
+      .file-row { gap: .6rem; }
+      .file-btn { flex: 1 1 auto; }
+    }
+    @media (max-width: 360px) {
+      .back { font-size: .64rem; letter-spacing: .08em; padding: .4rem .7rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <a class="wordmark" href="" aria-label="TEDxAASTMT home"><span class="red">TED</span><span class="red">x</span>AASTMT</a>
+
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="title">
+      <div class="rule" aria-hidden="true"></div>
+      <h1 id="title">Join the team<br><em>behind the ideas</em></h1>
+      <p class="lede">
+        TEDxAASTMT is built by students. Pick a team, bring your energy, and help us create
+        something worth sharing.
+      </p>
+    </section>
+
+    <section id="teams" aria-labelledby="teams-title">
+      <div class="sec-head">
+        <span class="kicker">Open positions</span>
+        <h2 id="teams-title">Our teams</h2>
+      </div>
+
+      <div class="team-grid">
+        <article class="team-card">
+          <span class="team-num">01</span>
+          <h3>Coaches</h3>
+          <p>Coaches work closely with our speakers, helping them shape their ideas into clear, memorable talks.</p>
+          <ul>
+            <li>Guide speakers through their talk</li>
+            <li>Give feedback during rehearsals</li>
+            <li>Help speakers feel ready for the stage</li>
+          </ul>
+          <div class="card-btn">
+            <button type="button" data-team="Coaches">Apply to Coaches</button>
+          </div>
+        </article>
+
+        <article class="team-card">
+          <span class="team-num">02</span>
+          <h3>Operation &amp; PR</h3>
+          <p>The team that makes the event run smoothly, from logistics and venue to partners and communication.</p>
+          <ul>
+            <li>Plan schedules, venue and logistics</li>
+            <li>Coordinate with sponsors and partners</li>
+            <li>Handle the on-the-day operations</li>
+          </ul>
+          <div class="card-btn">
+            <button type="button" data-team="Operation &amp; PR">Apply to Operation &amp; PR</button>
+          </div>
+        </article>
+
+        <article class="team-card">
+          <span class="team-num">03</span>
+          <h3>Media &amp; Marketing</h3>
+          <p>The creative voice of TEDxAASTMT, telling our story through visuals, content and campaigns.</p>
+          <ul>
+            <li>Design graphics and social content</li>
+            <li>Photograph and film the event</li>
+            <li>Run promotion and campaigns</li>
+          </ul>
+          <div class="card-btn">
+            <button type="button" data-team="Media &amp; Marketing">Apply to Media &amp; Marketing</button>
+          </div>
+        </article>
+
+        <article class="team-card">
+          <span class="team-num">04</span>
+          <h3>HR</h3>
+          <p>HR looks after the people behind the event, keeping the team organized, motivated and connected.</p>
+          <ul>
+            <li>Recruit and onboard new members</li>
+            <li>Organize team activities and meetings</li>
+            <li>Support members throughout the journey</li>
+          </ul>
+          <div class="card-btn">
+            <button type="button" data-team="HR">Apply to HR</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="apply-panel" id="apply" aria-labelledby="apply-title">
+      <h2 id="apply-title">Apply to join</h2>
+      <p class="sub">
+        Tell us a little about yourself and which team interests you most.
+        We'll review your application and get back to you by email.
+      </p>
+
+      <div id="notice" class="notice" role="alert"></div>
+
+      <form id="apply-form" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label class="lbl" for="name">Full name</label>
+            <input id="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="name-err">
+            <p class="error" id="name-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label class="lbl" for="email">Email</label>
+            <input id="email" type="email" autocomplete="email" maxlength="120" required aria-describedby="email-err">
+            <p class="error" id="email-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label class="lbl" for="regno">AASTMT registration number</label>
+            <input id="regno" type="text" inputmode="numeric" autocomplete="off" maxlength="9" required aria-describedby="regno-hint regno-err">
+            <p class="hint" id="regno-hint">Your 9-digit registration number</p>
+            <p class="error" id="regno-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label class="lbl" for="phone">Phone number</label>
+            <input id="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" required aria-describedby="phone-err">
+            <p class="error" id="phone-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label class="lbl" for="college">College / Major</label>
+            <input id="college" type="text" autocomplete="organization" maxlength="100" required aria-describedby="college-err">
+            <p class="error" id="college-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label class="lbl" for="team">Preferred team</label>
+            <select id="team" required aria-describedby="team-err">
+              <option value="" selected disabled>Choose a team</option>
+              <option value="Coaches">Coaches</option>
+              <option value="Operation &amp; PR">Operation &amp; PR</option>
+              <option value="Media &amp; Marketing">Media &amp; Marketing</option>
+              <option value="HR">HR</option>
+            </select>
+            <p class="error" id="team-err" role="alert"></p>
+          </div>
+
+          <div class="field full">
+            <label class="lbl" for="why">Why do you want to join?</label>
+            <textarea id="why" maxlength="2000" required aria-describedby="why-err"></textarea>
+            <p class="error" id="why-err" role="alert"></p>
+          </div>
+
+          <div class="field full">
+<span class="lbl" id="sample-label">
+  Any work sample you'd like to share? <span class="optional">(optional)</span>
+</span>
+            <div class="file-row">
+              <input class="file-input" id="sample" type="file" aria-labelledby="sample-label" aria-describedby="sample-hint sample-err"
+                     accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.doc,.docx,.ppt,.pptx,.mp4,.zip">
+              <label class="file-btn" for="sample">Choose a file</label>
+              <span class="file-name" id="file-name">No file chosen</span>
+            </div>
+
+            <p class="error" id="sample-err" role="alert"></p>
+          </div>
+        </div>
+
+        <button class="btn block" type="submit" id="submit">Submit application</button>
+      </form>
+
+      <div class="done" id="done" hidden>
+        <span class="done-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m4.5 12.5 5 5 10-11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <h2>Application received</h2>
+        <p id="done-text"></p>
+        <button class="btn" type="button" id="another">Submit another application</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot-inner">
+      <a class="wordmark" href="index.html" aria-label="TEDxAASTMT home"><span class="red">TED</span><span class="red">x</span>AASTMT</a>
+
+      <ul class="socials">
+        <li>
+          <a href="https://www.instagram.com/tedxaastmt/" target="_blank" rel="noopener noreferrer" aria-label="TEDxAASTMT on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+            </svg>
+            Instagram
+          </a>
+        </li>
+        <li>
+          <a href="https://chat.whatsapp.com/CysEmqA07HfLkWu6Xxqxq0" target="_blank" rel="noopener noreferrer" aria-label="Join the WhatsApp group">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.52 3.48A11.8 11.8 0 0 0 12.1 0C5.56 0 .23 5.32.23 11.87c0 2.1.55 4.15 1.6 5.96L.13 24l6.33-1.66a11.9 11.9 0 0 0 5.63 1.43h.01c6.55 0 11.87-5.32 11.87-11.87 0-3.17-1.23-6.15-3.45-8.42ZM12.1 21.75h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.76.99 1-3.67-.24-.38a9.83 9.83 0 0 1-1.51-5.23c0-5.47 4.45-9.92 9.93-9.92 2.65 0 5.14 1.03 7.01 2.91a9.87 9.87 0 0 1 2.9 7.02c0 5.47-4.45 9.92-9.92 9.92Zm5.44-7.43c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.67-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
+            </svg>
+            WhatsApp
+          </a>
+        </li>
+        <li>
+          <a href="mailto:tedxaastmt26@gmail.com" aria-label="Email TEDxAASTMT">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2.5" y="4.5" width="19" height="15" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="m3.5 6 8.5 7 8.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Email
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="legal">
+      <span>This independent TEDx event is operated under license from TED.</span>
+      <span>Made by Razan AlOraby</span>
+    </div>
+  </footer>
+
+  <script>
+    /* ============ CONFIG ============ */
+    // Opened straight from disk? Use the local backend. Served by the backend? Same origin.
+    const API_BASE = location.protocol === "file:" ? "http://localhost:5000" : "";
+    const APPLY_URL = API_BASE + "/apply";
+    const MAX_FILE = 10 * 1024 * 1024;
+    const FILE_EXT = [".pdf", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".doc", ".docx", ".ppt", ".pptx", ".mp4", ".zip"];
+
+    /* ============ ELEMENTS ============ */
+    const $ = (id) => document.getElementById(id);
+    const form = $("apply-form");
+    const done = $("done");
+    const notice = $("notice");
+    const submitButton = $("submit");
+    const teamSelect = $("team");
+    const fileInput = $("sample");
+    const fileName = $("file-name");
+    const sampleError = $("sample-err");
+
+    function showNotice(message) {
+      notice.textContent = message || "";
+      notice.classList.toggle("show", Boolean(message));
+    }
+
+    function resetSubmitButton() {
+      submitButton.disabled = false;
+      submitButton.textContent = "Submit application";
+    }
+
+    /* ============ VALIDATION ============ */
+    const fields = {
+      name: {
+        el: $("name"), err: $("name-err"),
+        check(v) {
+          if (v.length < 3) return "Name must contain at least 3 characters.";
+          if (/\d/.test(v)) return "No numbers are allowed in the name.";
+          return "";
+        }
+      },
+      email: {
+        el: $("email"), err: $("email-err"),
+        check(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Please enter a valid email address."; }
+      },
+      regno: {
+        el: $("regno"), err: $("regno-err"),
+        check(v) { return /^\d{9}$/.test(v) ? "" : "Registration number must be exactly 9 digits."; }
+      },
+      phone: {
+        el: $("phone"), err: $("phone-err"),
+        check(v) {
+          const digits = v.replace(/\D/g, "");
+          if (!v) return "Please enter your phone number.";
+          if (digits.length < 8 || digits.length > 15) return "Please enter a valid phone number.";
+          return "";
+        }
+      },
+      college: {
+        el: $("college"), err: $("college-err"),
+        check(v) { return v.length >= 2 ? "" : "Please enter your college or major."; }
+      },
+      why: {
+        el: $("why"), err: $("why-err"),
+        check(v) { return v.length >= 20 ? "" : "Please write at least 20 characters."; }
+      }
+    };
+
+    function validate(field) {
+      const message = field.check(field.el.value.trim());
+      field.err.textContent = message;
+      field.el.setAttribute("aria-invalid", message ? "true" : "false");
+      return !message;
+    }
+
+    Object.values(fields).forEach((field) => {
+      field.el.addEventListener("blur", () => validate(field));
+      field.el.addEventListener("input", () => {
+        if (field.el.getAttribute("aria-invalid") === "true") validate(field);
+      });
+    });
+
+    $("regno").addEventListener("input", function () {
+      this.value = this.value.replace(/\D/g, "").slice(0, 9);
+    });
+
+    teamSelect.addEventListener("change", () => {
+      $("team-err").textContent = teamSelect.value ? "" : "Please choose a team.";
+      teamSelect.setAttribute("aria-invalid", teamSelect.value ? "false" : "true");
+    });
+
+    document.querySelectorAll("[data-team]").forEach((button) => {
+      button.addEventListener("click", () => {
+        teamSelect.value = button.dataset.team;
+        teamSelect.setAttribute("aria-invalid", "false");
+        $("team-err").textContent = "";
+        $("apply").scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => teamSelect.focus({ preventScroll: true }), 320);
+      });
+    });
+
+    /* ============ FILE ============ */
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + " B";
+      if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + " KB";
+      return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+    }
+
+    function checkFile(file) {
+      if (!file) return "";
+      const ext = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
+      if (!FILE_EXT.includes(ext)) return "That file type isn't supported. Use PDF, image, DOC, PPT, MP4 or ZIP.";
+      if (file.size > MAX_FILE) return "The file is " + formatSize(file.size) + ". Please keep it under 10 MB.";
+      return "";
+    }
+
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files[0];
+      const problem = checkFile(file);
+      sampleError.textContent = problem;
+      if (problem) {
+        fileInput.value = "";
+        fileName.textContent = "No file chosen";
+        return;
+      }
+      fileName.textContent = file ? file.name + " · " + formatSize(file.size) : "No file chosen";
+    });
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = String(reader.result || "");
+          resolve(result.slice(result.indexOf(",") + 1));
+        };
+        reader.onerror = () => reject(new Error("Could not read the file."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    /* ============ SUBMIT ============ */
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (submitButton.disabled) return;
+
+      showNotice("");
+      let firstInvalid = null;
+      Object.values(fields).forEach((field) => {
+        if (!validate(field) && !firstInvalid) firstInvalid = field.el;
+      });
+
+      if (!teamSelect.value) {
+        $("team-err").textContent = "Please choose a team.";
+        teamSelect.setAttribute("aria-invalid", "true");
+        if (!firstInvalid) firstInvalid = teamSelect;
+      }
+
+      const file = fileInput.files[0] || null;
+      const fileProblem = checkFile(file);
+      if (fileProblem) {
+        sampleError.textContent = fileProblem;
+        if (!firstInvalid) firstInvalid = fileInput;
+      }
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      const payload = {
+        name: fields.name.el.value.trim(),
+        email: fields.email.el.value.trim().toLowerCase(),
+        registration_number: fields.regno.el.value.trim(),
+        phone: fields.phone.el.value.trim(),
+        college: fields.college.el.value.trim(),
+        team: teamSelect.value,
+        why: fields.why.el.value.trim(),
+        sample: null
+      };
+
+      submitButton.disabled = true;
+      submitButton.textContent = file ? "Uploading application..." : "Sending application...";
+
+      try {
+        if (file) {
+          payload.sample = {
+            name: file.name,
+            type: file.type || "application/octet-stream",
+            size: file.size,
+            data: await fileToBase64(file)
+          };
+        }
+
+        const res = await fetch(APPLY_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        let result = {};
+        try { result = await res.json(); } catch (e) { /* non-JSON reply */ }
+
+        if (res.ok && result.ok) {
+          $("done-text").textContent =
+            "Thanks, " + payload.name + ". Your application for " + payload.team +
+            " is in. We'll get back to you at " + payload.email + ".";
+          form.hidden = true;
+          done.hidden = false;
+          form.reset();
+          fileName.textContent = "No file chosen";
+          sampleError.textContent = "";
+          Object.values(fields).forEach((field) => {
+            field.err.textContent = "";
+            field.el.removeAttribute("aria-invalid");
+          });
+          $("team-err").textContent = "";
+          resetSubmitButton();
+          done.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+
+        showNotice(result.message || "Something went wrong. Please try again.");
+      } catch (err) {
+        console.error("Application request error:", err);
+        showNotice("We couldn't reach the server. Check your connection and press the button again.");
+      }
+
+      resetSubmitButton();
+    });
+
+    $("another").addEventListener("click", () => {
+      done.hidden = true;
+      form.hidden = false;
+      showNotice("");
+      resetSubmitButton();
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+      $("name").focus({ preventScroll: true });
+    });
+  </script>
+</body>
+</html>
