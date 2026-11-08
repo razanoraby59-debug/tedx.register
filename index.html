@@ -376,6 +376,116 @@
     body.has-ticket main { grid-template-columns: 1fr; }
     .ticket-view:focus { outline: none; }
 
+/* ---------- attendee details ---------- */
+
+.attendee-details {
+  margin-top: 1.25rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid #e2ddd4;
+}
+
+.attendee-details .ticket-id {
+  margin-top: .15rem;
+}
+
+.attendee-details .ticket-id dd {
+  margin-top: .2rem;
+}
+
+/* ---------- event section ---------- */
+
+.ticket-event {
+  position: relative;
+  margin-top: 1.4rem;
+  padding: 1.25rem 1.15rem 1.3rem;
+  border-radius: 17px;
+  background: #171719;
+  color: #fff;
+  overflow: hidden;
+}
+
+.ticket-event::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #EB0028;
+}
+
+.ticket-event-heading {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  color: #b9b9c0;
+  font-size: .59rem;
+  font-weight: 900;
+  letter-spacing: .2em;
+}
+
+.ticket-event-line {
+  width: 17px;
+  height: 2px;
+  background: #EB0028;
+}
+
+.ticket-event h4 {
+  margin-top: .8rem;
+  color: #fff;
+  font-family: var(--display);
+  font-size: 1.65rem;
+  line-height: 1;
+  letter-spacing: -.055em;
+}
+
+.ticket-event-subtitle {
+  margin-top: .35rem;
+  color: #a7a7af;
+  font-size: .7rem;
+}
+
+.ticket-event-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem .8rem;
+  margin-top: 1.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.13);
+}
+
+.ticket-event-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  min-width: 0;
+}
+
+.event-label {
+  color: #92929b;
+  font-size: .55rem;
+  font-weight: 900;
+  letter-spacing: .15em;
+}
+
+.ticket-event-grid strong {
+  color: #fff;
+  font-size: .78rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 360px) {
+  .ticket-event {
+    padding: 1.1rem .9rem;
+  }
+
+  .ticket-event-grid {
+    grid-template-columns: 1fr;
+    gap: .8rem;
+  }
+}
+
     .tv-head { text-align: center; margin-bottom: clamp(1.6rem, 4vw, 2.2rem); }
     .tv-head h2 {
       font-family: var(--display);
@@ -948,39 +1058,62 @@ canvas {
   CROSSROADS
 </p>
 
-<p class="t-eyebrow">Attendee</p>
+<p class="t-eyebrow">Attendee details</p>
 <h3 id="tk-name"></h3>
 
-<dl class="t-details">
-  <div><dt>Registration no.</dt><dd id="tk-regno"></dd></div>
-  <div><dt>Branch</dt><dd id="tk-branch"></dd></div>
-  <div class="full"><dt>Email</dt><dd id="tk-email"></dd></div>
-
-  <div class="full">
-    <dt>Event date</dt>
-    <dd>Tuesday, 15 December 2026</dd>
+<dl class="t-details attendee-details">
+  <div>
+    <dt>Registration no.</dt>
+    <dd id="tk-regno"></dd>
   </div>
 
   <div>
-    <dt>Time</dt>
-    <dd>2:30 PM</dd>
-  </div>
-
-  <div>
-    <dt>Location</dt>
-    <dd>AASTMT AbuQir</dd>
+    <dt>Branch</dt>
+    <dd id="tk-branch"></dd>
   </div>
 
   <div class="full">
-    <dt>Venue</dt>
-    <dd>Pharmacy · Romanian Stadium</dd>
+    <dt>Email</dt>
+    <dd id="tk-email"></dd>
   </div>
 
-  <div class="full">
+  <div class="full ticket-id">
     <dt>Ticket ID</dt>
     <dd class="tid" id="tk-id"></dd>
   </div>
 </dl>
+
+<section class="ticket-event">
+  <div class="ticket-event-heading">
+    <span class="ticket-event-line"></span>
+    <span>EVENT DETAILS</span>
+  </div>
+
+  <h4>CROSSROADS</h4>
+  <p class="ticket-event-subtitle">Ideas worth sharing. Paths worth exploring.</p>
+
+  <div class="ticket-event-grid">
+    <div>
+      <span class="event-label">DATE</span>
+      <strong>Tuesday, 15 December 2026</strong>
+    </div>
+
+    <div>
+      <span class="event-label">TIME</span>
+      <strong>2:30 PM</strong>
+    </div>
+
+    <div class="event-location">
+      <span class="event-label">LOCATION</span>
+      <strong>AASTMT AbuQir</strong>
+    </div>
+
+    <div>
+      <span class="event-label">VENUE</span>
+      <strong>Pharmacy · Romanian Stadium</strong>
+    </div>
+  </div>
+</section>
 
 
         <div class="t-foot">
