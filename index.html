@@ -120,6 +120,115 @@
       letter-spacing: -.055em;
     }
     .hero h1 em { font-style: normal; color: var(--red); }
+    
+/* ---------- event introduction ---------- */
+
+.event-kicker {
+  color: #bdbdc4;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  letter-spacing: -.075em;
+}
+
+.event-tagline {
+  color: #c5c5cb;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 390px;
+  margin-top: 1.1rem;
+}
+
+.event-card {
+  margin-top: 2rem;
+  max-width: 440px;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 18px;
+  background: rgba(255,255,255,.045);
+  backdrop-filter: blur(12px);
+}
+
+.event-card-heading {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  color: #a8a8af;
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .19em;
+  margin-bottom: 1.3rem;
+}
+
+.event-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 10px rgba(235,0,40,.6);
+}
+
+.event-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.event-icon {
+  color: var(--red);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  width: 25px;
+  text-align: center;
+}
+
+.event-detail div {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.event-detail small {
+  color: #92929a;
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+}
+
+.event-detail strong {
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 800;
+}
+
+.event-detail span:not(.event-icon) {
+  color: #b6b6bd;
+  font-size: .85rem;
+}
+
+.event-divider {
+  height: 1px;
+  background: rgba(255,255,255,.12);
+  margin: 1.1rem 0;
+}
+
+@media (max-width: 560px) {
+  .event-card {
+    margin-top: 1.5rem;
+    padding: 1.2rem;
+  }
+
+  .event-tagline {
+    font-size: .95rem;
+  }
+}
+
 
     .perks {
       list-style: none;
@@ -607,6 +716,114 @@
       .ticket { --notch: #fff; box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
+
+    
+/* ========== LAPTOP & DESKTOP SIZING FIX ========== */
+
+/* Standard laptops */
+@media (min-width: 901px) and (max-width: 1440px) {
+  :root {
+    --gutter: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  main {
+    max-width: 1240px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 3.5vw, 3.5rem);
+    padding-top: 3.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.5rem, 6vw, 5.6rem);
+    line-height: 0.96;
+  }
+
+  .event-tagline {
+    font-size: 1rem;
+  }
+
+  .event-card {
+    max-width: 100%;
+    padding: 1.25rem;
+  }
+
+  .panel {
+    padding: clamp(1.5rem, 2.5vw, 2.2rem);
+  }
+}
+
+/* Smaller laptop screens */
+@media (min-width: 901px) and (max-width: 1100px) {
+  main {
+    gap: 1.6rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.2rem, 5.5vw, 4.5rem);
+  }
+
+  .panel {
+    padding: 1.5rem;
+  }
+
+  .branches {
+    gap: 0.4rem;
+  }
+
+  .chip span {
+    font-size: 0.82rem;
+  }
+}
+
+/* Prevent horizontal overflow */
+main,
+.hero,
+.panel,
+.ticket-view {
+  min-width: 0;
+}
+
+img,
+canvas {
+  max-width: 100%;
+}
+
+/* ========== TICKET DETAILS ========== */
+
+.t-details {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.t-details > div {
+  min-width: 0;
+}
+
+.t-details dd {
+  overflow-wrap: anywhere;
+}
+
+/* ========== FIX MOBILE MEDIA QUERY ========== */
+@media (max-width: 560px) {
+  .hero h1 {
+    font-size: clamp(3rem, 13vw, 4.5rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .t-details {
+    grid-template-columns: 1fr;
+  }
+
+  .branches {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
   </style>
 </head>
 
@@ -619,15 +836,52 @@
   </header>
 
   <main>
-    <section class="hero" aria-labelledby="title">
-      <div class="rule" aria-hidden="true"></div>
-      <h1 id="title">Ideas worth <em>sharing.</em></h1>
-      <ul class="perks">
-        <li>Free for everyone</li>
-        <li>Takes 30 seconds</li>
-        <li>Instant QR ticket</li>
-      </ul>
-    </section>
+
+<section class="hero" aria-labelledby="title">
+  <div class="rule" aria-hidden="true"></div>
+
+
+
+  <h1 id="title">CROSS<span class="red">ROADS</span></h1>
+
+  <p class="event-tagline">
+  You don't find the right path by thinking.<br> You find it by trying!
+  </p>
+
+  <div class="event-card">
+    <div class="event-card-heading">
+      <span class="event-dot"></span>
+      EVENT DETAILS
+    </div>
+
+    <div class="event-detail">
+      <span class="event-icon">◷</span>
+      <div>
+        <small>DATE & TIME</small>
+        <strong>Tuesday, 15 December 2026</strong>
+        <span>2:30 PM</span>
+      </div>
+    </div>
+
+    <div class="event-divider"></div>
+
+    <div class="event-detail">
+      <span class="event-icon">⌖</span>
+      <div>
+        <small>LOCATION</small>
+        <strong>AASTMT AbuQir</strong>
+        <span>Pharmacy · Romanian Stadium</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="perks">
+    <li>Free entry</li>
+    <li>Limited seats</li>
+    <li>Instant QR ticket</li>
+  </ul>
+</section>
+
 
     <section class="panel" aria-labelledby="form-title">
       <h2 id="form-title">Get your ticket</h2>
@@ -689,17 +943,45 @@
         <div class="t-tear" aria-hidden="true"></div>
 
         <div class="t-info">
-          <p class="t-eyebrow">Attendee</p>
-          <h3 id="tk-name"></h3>
-          <p class="t-meta"><span id="tk-date"></span> &middot; <span id="tk-place"></span></p>
 
-          <dl class="t-details">
-            <div><dt>Registration no.</dt><dd id="tk-regno"></dd></div>
-            <div><dt>Branch</dt><dd id="tk-branch"></dd></div>
-            <div class="full"><dt>Email</dt><dd id="tk-email"></dd></div>
-            <div class="full"><dt>Ticket ID</dt><dd class="tid" id="tk-id"></dd></div>
-          </dl>
-        </div>
+<p style="font-size:.7rem;font-weight:900;letter-spacing:.16em;color:#EB0028;">
+  CROSSROADS
+</p>
+
+<p class="t-eyebrow">Attendee</p>
+<h3 id="tk-name"></h3>
+
+<dl class="t-details">
+  <div><dt>Registration no.</dt><dd id="tk-regno"></dd></div>
+  <div><dt>Branch</dt><dd id="tk-branch"></dd></div>
+  <div class="full"><dt>Email</dt><dd id="tk-email"></dd></div>
+
+  <div class="full">
+    <dt>Event date</dt>
+    <dd>Tuesday, 15 December 2026</dd>
+  </div>
+
+  <div>
+    <dt>Time</dt>
+    <dd>2:30 PM</dd>
+  </div>
+
+  <div>
+    <dt>Location</dt>
+    <dd>AASTMT AbuQir</dd>
+  </div>
+
+  <div class="full">
+    <dt>Venue</dt>
+    <dd>Pharmacy · Romanian Stadium</dd>
+  </div>
+
+  <div class="full">
+    <dt>Ticket ID</dt>
+    <dd class="tid" id="tk-id"></dd>
+  </div>
+</dl>
+
 
         <div class="t-foot">
 
@@ -912,8 +1194,7 @@
       $("tk-branch").textContent = ticket.branch || "";
       $("tk-email").textContent = ticket.email || "";
       $("tk-id").textContent = ticket.ticketId || "";
-      $("tk-date").textContent = ticket.eventDate || eventInfo.date || "Date to be announced";
-      $("tk-place").textContent = ticket.eventPlace || eventInfo.place || "AASTMT";
+
 
       document.body.classList.add("has-ticket");
 
