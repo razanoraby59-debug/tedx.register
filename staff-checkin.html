@@ -688,10 +688,11 @@
     const attendeeCard = document.getElementById("attendeeCard");
     const scannerPlaceholder = document.getElementById("scannerPlaceholder");
 
-    function showStatus(message, type = "info") {
-      statusMessage.textContent = message;
-      statusMessage.className = `status ${type}`;
-    }
+function showStatus(message, type = "info") {
+  statusMessage.textContent = message;
+  statusMessage.className = `status ${type}`;
+  statusMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+}
 
     function clearStatus() {
       statusMessage.textContent = "";
