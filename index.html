@@ -354,7 +354,7 @@
     }
     .btn:hover { background: var(--red-deep); border-color: var(--red-deep); }
     .btn:active { transform: translateY(1px); }
-    .btn.block { width: 100%; margin-top: .4rem; }
+    .btn.block { width: 100%; margin-top: .4rem; background: #EB0028; }
     .btn.ghost { background: transparent; border-color: rgba(255, 255, 255, .35); color: #fff; }
     .btn.ghost:hover { background: #fff; color: var(--ink); border-color: #fff; }
     .btn[disabled] { opacity: .55; cursor: not-allowed; }
@@ -780,13 +780,26 @@
 
       /* perks: keep all three on one row */
       .perks { flex-wrap: nowrap; gap: .3rem; }
-      .perks li {
-        flex: 1 1 0;
-        justify-content: center;
-        padding: .55rem .25rem;
-        font-size: clamp(.56rem, 2.9vw, .82rem);
-      }
-      .perks li::before { display: none; }
+.perks li {
+  flex: 1 1 0;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  padding: .55rem .3rem;
+  font-size: clamp(.55rem, 2.8vw, .82rem);
+  white-space: nowrap;
+}
+.perks li::before {
+  display: block;
+  content: "";
+  flex: 0 0 .38rem;
+  width: .38rem;
+  height: .38rem;
+  border-radius: 50%;
+  background: var(--red);
+}
 
       /* footer socials: keep all three on one row */
       .socials { width: 100%; flex-wrap: nowrap; gap: .4rem; }
@@ -1108,7 +1121,7 @@ canvas {
         <div class="field">
           <label class="lbl" for="regno">Registration number</label>
           <input id="regno" type="text" inputmode="numeric" autocomplete="off" maxlength="9" required aria-describedby="regno-hint regno-err">
-          <p class="hint" id="regno-hint">Your 9-digit university registration number.</p>
+          <p class="hint" id="regno-hint">Your AASTMT registration number.</p>
           <p class="error" id="regno-err" role="alert"></p>
         </div>
 
