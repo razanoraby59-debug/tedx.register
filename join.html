@@ -672,6 +672,17 @@
           </div>
 
           <div class="field">
+            <label class="lbl" for="branch">Branch</label>
+            <select id="branch" required aria-describedby="branch-err">
+              <option value="" selected disabled>Choose your branch</option>
+              <option value="Alamein">Alamein</option>
+              <option value="Miami">Miami</option>
+              <option value="Abuqir">Abuqir</option>
+            </select>
+            <p class="error" id="branch-err" role="alert"></p>
+          </div>
+
+          <div class="field full">
             <label class="lbl" for="team">Preferred team</label>
             <select id="team" required aria-describedby="team-err">
               <option value="" selected disabled>Choose a team</option>
@@ -700,7 +711,6 @@
               <label class="file-btn" for="sample">Choose a file</label>
               <span class="file-name" id="file-name">No file chosen</span>
             </div>
-
             <p class="error" id="sample-err" role="alert"></p>
           </div>
         </div>
@@ -764,9 +774,8 @@
 
   <script>
     /* ============ CONFIG ============ */
-    // Opened straight from disk? Use the local backend. Served by the backend? Same origin.
-    const API_BASE = location.protocol === "file:" ? "http://localhost:5000" : "";
-    const APPLY_URL = API_BASE + "/apply";
+    // Paste your Google Apps Script web app URL here (see SETUP.md).
+    const APPLY_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
     const MAX_FILE = 10 * 1024 * 1024;
     const FILE_EXT = [".pdf", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".doc", ".docx", ".ppt", ".pptx", ".mp4", ".zip"];
 
@@ -777,6 +786,7 @@
     const notice = $("notice");
     const submitButton = $("submit");
     const teamSelect = $("team");
+    const branchSelect = $("branch");
     const fileInput = $("sample");
     const fileName = $("file-name");
     const sampleError = $("sample-err");
@@ -851,6 +861,11 @@
       teamSelect.setAttribute("aria-invalid", teamSelect.value ? "false" : "true");
     });
 
+    branchSelect.addEventListener("change", () => {
+      $("branch-err").textContent = branchSelect.value ? "" : "Please choose your branch.";
+      branchSelect.setAttribute("aria-invalid", branchSelect.value ? "false" : "true");
+    });
+
     document.querySelectorAll("[data-team]").forEach((button) => {
       button.addEventListener("click", () => {
         teamSelect.value = button.dataset.team;
@@ -911,6 +926,12 @@
         if (!validate(field) && !firstInvalid) firstInvalid = field.el;
       });
 
+      if (!branchSelect.value) {
+        $("branch-err").textContent = "Please choose your branch.";
+        branchSelect.setAttribute("aria-invalid", "true");
+        if (!firstInvalid) firstInvalid = branchSelect;
+      }
+
       if (!teamSelect.value) {
         $("team-err").textContent = "Please choose a team.";
         teamSelect.setAttribute("aria-invalid", "true");
@@ -936,9 +957,15 @@
         phone: fields.phone.el.value.trim(),
         college: fields.college.el.value.trim(),
         team: teamSelect.value,
+        branch: branchSelect.value,
         why: fields.why.el.value.trim(),
         sample: null
       };
+
+      if (APPLY_URL.indexOf("http") !== 0) {
+        showNotice("The form isn't connected yet. Add the web app URL to APPLY_URL (see SETUP.md).");
+        return;
+      }
 
       submitButton.disabled = true;
       submitButton.textContent = file ? "Uploading application..." : "Sending application...";
@@ -955,7 +982,8 @@
 
         const res = await fetch(APPLY_URL, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          // text/plain keeps this a "simple" request so Apps Script needs no CORS preflight.
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload)
         });
 
@@ -965,7 +993,7 @@
         if (res.ok && result.ok) {
           $("done-text").textContent =
             "Thanks, " + payload.name + ". Your application for " + payload.team +
-            " is in. We'll get back to you at " + payload.email + ".";
+            " at " + payload.branch + " is in. We'll get back to you at " + payload.email + ".";
           form.hidden = true;
           done.hidden = false;
           form.reset();
@@ -976,6 +1004,9 @@
             field.el.removeAttribute("aria-invalid");
           });
           $("team-err").textContent = "";
+          $("branch-err").textContent = "";
+          teamSelect.removeAttribute("aria-invalid");
+          branchSelect.removeAttribute("aria-invalid");
           resetSubmitButton();
           done.scrollIntoView({ behavior: "smooth", block: "center" });
           return;
