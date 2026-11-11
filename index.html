@@ -655,7 +655,11 @@
     /* ============ CONFIG ============ */
     // Opened straight from disk? Use the local backend. Served by the backend? Same origin.
     const API_BASE = location.protocol === "file:" ? "http://localhost:5000" : "";
-    const REGISTER_URL = API_BASE + "/register";
+    // Paste your Apps Script web app URL (ends in /exec) to run with NO Node server.
+    // Leave it empty only if you host server.js together with this page.
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxizLAp6NdDOJVpZPMrd-JJE6CNYo9xVe-2UH8VJhivY8JIzIsfgC962YjGZLhwfxKsbQ/exec";
+    const DIRECT = Boolean(APPS_SCRIPT_URL);
+    const REGISTER_URL = DIRECT ? APPS_SCRIPT_URL : API_BASE + "/register";
     const STATUS_URL = API_BASE + "/event-status";
     const STORAGE_KEY = "tedxaastmt_ticket_v2";
     const QR_SOURCES = [
@@ -710,6 +714,7 @@
     }
 
     async function loadEventInfo() {
+      if (DIRECT) { renderEventInfo(); applyRegistrationState(); return; } // uses the defaults above
       try {
         const res = await fetch(STATUS_URL, { cache: "no-store" });
         if (!res.ok) throw new Error("Status " + res.status);
@@ -1036,8 +1041,9 @@
       try {
         const res = await fetch(REGISTER_URL, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+          // text/plain keeps this a "simple" request, which Apps Script accepts from any site.
+          headers: { "Content-Type": DIRECT ? "text/plain;charset=utf-8" : "application/json" },
+          body: JSON.stringify(DIRECT ? { action: "register", ...payload } : payload)
         });
 
         let result = {};
