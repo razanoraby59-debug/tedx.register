@@ -7,6 +7,15 @@
   <meta name="description" content="Register for free and get your personal TEDxAASTMT ticket with a QR code.">
   <meta name="theme-color" content="#0b0b0c">
 
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TEDxAASTMT CROSSROADS | Get your free ticket">
+  <meta property="og:description" content="At the Intersection of What if and What Could Be. Register for free and get your QR ticket instantly.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TEDxAASTMT CROSSROADS | Get your free ticket">
+  <meta name="twitter:description" content="Register for free and get your QR ticket instantly.">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23EB0028'/%3E%3Ctext x='32' y='45' font-family='Arial Black,Arial' font-size='38' font-weight='900' text-anchor='middle' fill='%23fff'%3Ex%3C/text%3E%3C/svg%3E">
+
   <style>
     :root {
       --page: #0b0b0c;
@@ -19,7 +28,7 @@
       --display: "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
       --body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
       --gutter: clamp(1.1rem, 4vw, 2.5rem);
-      --wrap: 1180px;
+      --wrap: 1240px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,54 +52,38 @@
     a { color: inherit; text-decoration: none; }
     button { font: inherit; }
     :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-
+    .panel :focus-visible, .ticket :focus-visible { outline-color: var(--red); }
     .red { color: var(--red); }
-.wordmark {
-  font-family: "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1.35rem;
-  font-weight: 900;
-  letter-spacing: -.05em;
-  line-height: 1;
-  white-space: nowrap;
-  -webkit-text-stroke: .45px currentColor;
-}
+    img, canvas { max-width: 100%; }
 
-.wordmark .red {
-  font-size: 1.05em;
-  -webkit-text-stroke: .45px currentColor;
-}
-    /* ---------- header ---------- */
-    .top {
-      border-bottom: 1px solid var(--line);
+    .wordmark {
+      font-family: var(--display);
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -.05em;
+      line-height: 1;
+      white-space: nowrap;
+      -webkit-text-stroke: .45px currentColor;
     }
+    .wordmark .red { font-size: 1.05em; -webkit-text-stroke: .45px currentColor; }
+
+    /* ---------- header ---------- */
+    .top { border-bottom: 1px solid var(--line); }
     .top-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: var(--wrap);
-      margin: 0 auto;
-      padding: 1.1rem var(--gutter);
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: var(--wrap); margin: 0 auto; padding: 1.1rem var(--gutter);
     }
     .pill {
-      display: inline-flex;
-      align-items: center;
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      padding: .45rem .9rem;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: #d6d6db;
-      background: rgba(255, 255, 255, .04);
+      display: inline-flex; align-items: center;
+      font-size: .72rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+      padding: .45rem .9rem; border: 1px solid var(--line); border-radius: 999px;
+      color: #d6d6db; background: rgba(255, 255, 255, .04);
     }
     .pill i {
-      width: .5rem; height: .5rem;
-      border-radius: 50%;
-      background: var(--red);
-      margin-right: .55rem;
-      box-shadow: 0 0 0 4px rgba(235, 0, 40, .28);
+      width: .5rem; height: .5rem; border-radius: 50%; background: var(--red);
+      margin-right: .55rem; box-shadow: 0 0 0 4px rgba(235, 0, 40, .28);
     }
+    .pill.closed i { background: #777; box-shadow: 0 0 0 4px rgba(255, 255, 255, .12); }
 
     /* ---------- stage ---------- */
     main {
@@ -100,12 +93,12 @@
       margin: 0 auto;
       padding: clamp(2rem, 6vw, 4.5rem) var(--gutter) clamp(3rem, 8vw, 6rem);
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
-      gap: clamp(2.2rem, 6vw, 5rem);
-      align-items: start; /* hero and form share the same top edge */
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: clamp(1.5rem, 4vw, 3rem);
+      align-items: start;
     }
+    main, .hero, .panel, .ticket-view { min-width: 0; }
 
-    /* the horizontal line above the headline: same height and top edge as the form's red strip */
     .rule {
       height: 6px;
       margin-bottom: clamp(1.4rem, 3vw, 2rem);
@@ -113,208 +106,75 @@
       background: linear-gradient(90deg, var(--red) 0 84px, rgba(255, 255, 255, .2) 84px 100%);
     }
 
-
-/* ---------- event introduction ---------- */
-
-.event-kicker {
-  color: #bdbdc4;
-  font-size: .78rem;
-  font-weight: 800;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-.hero h1 {
-  font-family: var(--display);
-  font-size: clamp(2.5rem, 4.2vw, 4.5rem);
-  line-height: .96;
-  letter-spacing: -.075em;
-  white-space: nowrap;
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-.hero h1 em {
-  font-style: normal;
-  color: var(--red);
-}
-
-.event-tagline {
-  color: #c5c5cb;
-  font-size: 1.05rem;
-  line-height: 1.6;
-  max-width: 390px;
-  margin-top: 1.1rem;
-}
-
-.event-card {
-  margin-top: 2rem;
-  max-width: 440px;
-  padding: 1.4rem 1.5rem;
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 18px;
-  background: rgba(255,255,255,.045);
-  backdrop-filter: blur(12px);
-}
-
-.event-card-heading {
-  display: flex;
-  align-items: center;
-  gap: .65rem;
-  color: #a8a8af;
-  font-size: .68rem;
-  font-weight: 900;
-  letter-spacing: .19em;
-  margin-bottom: 1.3rem;
-}
-
-.event-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--red);
-  box-shadow: 0 0 10px rgba(235,0,40,.6);
-}
-
-.event-detail {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.event-icon {
-  color: var(--red);
-  font-size: 1.6rem;
-  line-height: 1.2;
-  width: 25px;
-  text-align: center;
-}
-
-.event-detail div {
-  display: flex;
-  flex-direction: column;
-  gap: .2rem;
-}
-
-.event-detail small {
-  color: #92929a;
-  font-size: .65rem;
-  font-weight: 800;
-  letter-spacing: .15em;
-}
-
-.event-detail strong {
-  color: #fff;
-  font-size: .95rem;
-  font-weight: 800;
-}
-
-.event-detail span:not(.event-icon) {
-  color: #b6b6bd;
-  font-size: .85rem;
-}
-
-.event-divider {
-  height: 1px;
-  background: rgba(255,255,255,.12);
-  margin: 1.1rem 0;
-}
-
-@media (max-width: 560px) {
-  .event-card {
-    margin-top: 1.5rem;
-    padding: 1.2rem;
-  }
-
-  .event-tagline {
-    font-size: .95rem;
-  }
-}
-
-
-    .perks {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: .65rem;
-      margin-top: clamp(1.6rem, 4vw, 2.4rem);
+    /* ---------- hero ---------- */
+    .hero { overflow: hidden; }
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: .96;
+      letter-spacing: -.07em;
+      white-space: nowrap;
     }
+    .hero h1 em { font-style: normal; color: var(--red); }
+
+    .event-tagline {
+      color: #c5c5cb; font-size: 1rem; line-height: 1.6; max-width: 380px; margin-top: 1.1rem;
+    }
+
+    .event-card {
+      margin-top: 2rem; max-width: 440px; padding: 1.3rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, .15); border-radius: 18px;
+      background: rgba(255, 255, 255, .045);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    }
+    .event-card-heading {
+      display: flex; align-items: center; gap: .65rem; color: #a8a8af;
+      font-size: .68rem; font-weight: 900; letter-spacing: .19em; margin-bottom: 1.3rem;
+    }
+    .event-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px rgba(235, 0, 40, .6); }
+    .event-detail { display: flex; align-items: flex-start; gap: 1rem; }
+    .event-icon { color: var(--red); font-size: 1.6rem; line-height: 1.2; width: 25px; text-align: center; }
+    .event-detail > div { display: flex; flex-direction: column; gap: .2rem; }
+    .event-detail small { color: #92929a; font-size: .65rem; font-weight: 800; letter-spacing: .15em; }
+    .event-detail strong { color: #fff; font-size: .95rem; font-weight: 800; }
+    .event-detail span:not(.event-icon) { color: #b6b6bd; font-size: .85rem; }
+    .event-divider { height: 1px; background: rgba(255, 255, 255, .12); margin: 1.1rem 0; }
+
+    .perks { list-style: none; display: flex; flex-wrap: wrap; gap: .65rem; margin-top: clamp(1.6rem, 4vw, 2.4rem); }
     .perks li {
-      display: inline-flex;
-      align-items: center;
-      gap: .55rem;
-      padding: .6rem 1.05rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid var(--line);
-      font-size: .88rem;
-      font-weight: 700;
-      color: #ececf0;
+      display: inline-flex; align-items: center; gap: .55rem; padding: .6rem 1.05rem;
+      border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid var(--line);
+      font-size: .88rem; font-weight: 700; color: #ececf0;
     }
-    .perks li::before {
-      content: "";
-      width: .42rem; height: .42rem;
-      border-radius: 50%;
-      background: var(--red);
-    }
+    .perks li::before { content: ""; width: .42rem; height: .42rem; border-radius: 50%; background: var(--red); flex: none; }
 
     /* ---------- form panel ---------- */
     .panel {
-      position: relative;
-      background: var(--paper);
-      color: var(--ink);
-      border-radius: 24px;
-      padding: clamp(1.6rem, 4vw, 2.5rem);
+      position: relative; background: var(--paper); color: var(--ink); border-radius: 24px;
+      padding: clamp(1.4rem, 2.4vw, 2.2rem);
       box-shadow: 0 40px 90px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .06);
-      min-width: 0;
       overflow: hidden;
     }
-    .panel::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 6px;
-      background: var(--red);
-    }
-    .panel h2 {
-      font-family: var(--display);
-      font-size: 1.75rem;
-      letter-spacing: -.045em;
-      line-height: 1.05;
-    }
+    .panel::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--red); }
+    .panel h2 { font-family: var(--display); font-size: 1.75rem; letter-spacing: -.045em; line-height: 1.05; }
     .panel .sub { color: #5b5b62; font-size: .95rem; margin: .45rem 0 1.7rem; }
 
     .field { margin-bottom: 1.15rem; }
     .lbl {
-      display: block;
-      font-size: .78rem;
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: #333;
-      margin-bottom: .45rem;
+      display: block; font-size: .78rem; font-weight: 800; letter-spacing: .06em;
+      text-transform: uppercase; color: #333; margin-bottom: .45rem;
     }
     input[type="text"], input[type="email"] {
-      width: 100%;
-      font: inherit;
-      font-size: 1rem;
-      padding: .9rem 1rem;
-      border-radius: 12px;
-      border: 2px solid #dcd8d2;
-      background: #fff;
-      color: var(--ink);
+      width: 100%; font: inherit; font-size: 1rem; padding: .9rem 1rem; border-radius: 12px;
+      border: 2px solid #dcd8d2; background: #fff; color: var(--ink);
       transition: border-color .15s, box-shadow .15s;
     }
     input[type="text"]:hover, input[type="email"]:hover { border-color: #bdb8b0; }
     input[type="text"]:focus, input[type="email"]:focus {
-      outline: none;
-      border-color: var(--red);
-      box-shadow: 0 0 0 4px rgba(235, 0, 40, .16);
+      outline: none; border-color: var(--red); box-shadow: 0 0 0 4px rgba(235, 0, 40, .16);
     }
     input[aria-invalid="true"] { border-color: var(--red-deep); background: #fff6f5; }
+    input:disabled { opacity: .6; cursor: not-allowed; }
 
     .hint { font-size: .78rem; color: #6c6c73; margin-top: .3rem; }
     .error { font-size: .82rem; font-weight: 700; color: var(--red-deep); min-height: 1.15em; margin-top: .25rem; }
@@ -323,726 +183,257 @@
     .chip { position: relative; display: block; cursor: pointer; }
     .chip input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: pointer; }
     .chip span {
-      display: block;
-      text-align: center;
-      padding: .85rem .4rem;
-      border-radius: 12px;
-      border: 2px solid #dcd8d2;
-      background: #fff;
-      font-weight: 800;
-      font-size: .92rem;
-      transition: all .15s;
+      display: block; text-align: center; padding: .85rem .4rem; border-radius: 12px;
+      border: 2px solid #dcd8d2; background: #fff; font-weight: 800; font-size: .92rem; transition: all .15s;
     }
     .chip:hover span { border-color: var(--red); }
     .chip input:checked + span { background: var(--ink); border-color: var(--ink); color: #fff; }
     .chip input:focus-visible + span { outline: 3px solid var(--red); outline-offset: 2px; }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: .5rem;
-      padding: 1rem 1.4rem;
-      border-radius: 12px;
-      border: 2px solid var(--red);
-      background: var(--red);
-      color: #fff;
-      font-weight: 800;
-      font-size: 1rem;
-      cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: 1rem 1.4rem; border-radius: 12px; border: 2px solid var(--red);
+      background: var(--red); color: #fff; font-weight: 800; font-size: 1rem; cursor: pointer;
       transition: background .15s, transform .15s, border-color .15s, color .15s;
     }
-    .btn:hover { background: var(--red-deep); border-color: var(--red-deep); }
-    .btn:active { transform: translateY(1px); }
-    .btn.block { width: 100%; margin-top: .4rem; background: #EB0028; }
+    .btn:hover:not([disabled]) { background: var(--red-deep); border-color: var(--red-deep); }
+    .btn:active:not([disabled]) { transform: translateY(1px); }
+    .btn.block { width: 100%; margin-top: .4rem; }
     .btn.ghost { background: transparent; border-color: rgba(255, 255, 255, .35); color: #fff; }
-    .btn.ghost:hover { background: #fff; color: var(--ink); border-color: #fff; }
+    .btn.ghost:hover:not([disabled]) { background: #fff; color: var(--ink); border-color: #fff; }
     .btn[disabled] { opacity: .55; cursor: not-allowed; }
 
     .fine { margin-top: 1rem; text-align: center; font-size: .78rem; color: #6c6c73; }
+    .fine a { color: var(--red-deep); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 
     .notice {
-      display: none;
-      margin-bottom: 1.1rem;
-      padding: .85rem 1rem;
-      border-radius: 12px;
-      background: #fdeceb;
-      border: 1px solid #f3b9b5;
-      color: var(--red-deep);
-      font-size: .9rem;
-      font-weight: 600;
+      display: none; margin-bottom: 1.1rem; padding: .85rem 1rem; border-radius: 12px;
+      background: #fdeceb; border: 1px solid #f3b9b5; color: var(--red-deep);
+      font-size: .9rem; font-weight: 600;
     }
     .notice.show { display: block; }
 
     /* ---------- ticket view ---------- */
     .ticket-view { display: none; grid-column: 1 / -1; }
+    .ticket-view:focus { outline: none; }
     body.has-ticket .ticket-view { display: block; }
     body.has-ticket .hero, body.has-ticket .panel { display: none; }
     body.has-ticket main { grid-template-columns: 1fr; }
-    .ticket-view:focus { outline: none; }
-
-/* ---------- attendee details ---------- */
-
-.attendee-details {
-  margin-top: 1.25rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid #e2ddd4;
-}
-
-.attendee-details .ticket-id {
-  margin-top: .15rem;
-}
-
-.attendee-details .ticket-id dd {
-  margin-top: .2rem;
-}
-
-/* ---------- event section ---------- */
-
-.ticket-event {
-  position: relative;
-  margin-top: 1.4rem;
-  padding: 1.25rem 1.15rem 1.3rem;
-  border-radius: 17px;
-  background: transparent;
-  color: var(--ink);
-  overflow: hidden;
-  border-top: 1px solid #e2ddd4;
-}
-
-.ticket-event::before {
-  content: none;
-}
-
-.ticket-event-heading {
-  color: #77777e;
-}
-
-.ticket-event h4 {
-  color: #111;
-}
-
-.ticket-event-subtitle {
-  color: #666;
-}
-
-.ticket-event-grid {
-  border-top-color: #e2ddd4;
-}
-
-.event-label {
-  color: #77777e;
-}
-
-.ticket-event-grid strong {
-  color: #111;
-}
-
-@media (max-width: 360px) {
-  .ticket-event {
-    padding: 1.1rem .9rem;
-  }
-
-  .ticket-event-grid {
-    grid-template-columns: 1fr;
-    gap: .8rem;
-  }
-}
 
     .tv-head { text-align: center; margin-bottom: clamp(1.6rem, 4vw, 2.2rem); }
-    .tv-head h2 {
-      font-family: var(--display);
-      font-size: clamp(1.9rem, 5vw, 2.9rem);
-      letter-spacing: -.05em;
-      line-height: 1;
-    }
+    .tv-head h2 { font-family: var(--display); font-size: clamp(1.9rem, 5vw, 2.9rem); letter-spacing: -.05em; line-height: 1; }
     .tv-head p { margin-top: .55rem; color: #c9c9cf; }
 
     .ticket {
       --notch: var(--page);
-      position: relative;
-      width: 100%;
-      max-width: 408px;
-      margin: 0 auto;
-      background:
-        radial-gradient(120% 55% at 50% 0%, #fffdfb, transparent 62%),
-        var(--paper);
-      color: var(--ink);
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow:
-        0 48px 100px rgba(0, 0, 0, .62),
-        0 18px 54px rgba(235, 0, 40, .22),
-        0 0 0 1px rgba(255, 255, 255, .08);
+      position: relative; width: 100%; max-width: 408px; margin: 0 auto;
+      background: radial-gradient(120% 55% at 50% 0%, #fffdfb, transparent 62%), var(--paper);
+      color: var(--ink); border-radius: 28px; overflow: hidden;
+      box-shadow: 0 48px 100px rgba(0, 0, 0, .62), 0 18px 54px rgba(235, 0, 40, .22), 0 0 0 1px rgba(255, 255, 255, .08);
     }
 
-    /* top: brand + QR code */
     .t-top {
-      position: relative;
-      padding: 1.35rem 1.45rem 1.7rem;
+      position: relative; padding: 1.35rem 1.45rem 1.7rem;
       background:
         radial-gradient(130% 100% at 100% 0%, rgba(255, 255, 255, .20), transparent 55%),
         radial-gradient(90% 80% at 0% 100%, rgba(0, 0, 0, .22), transparent 62%),
         linear-gradient(155deg, #EB0028 0%, #EB0028 40%, #c80022 78%, #9c001b 100%);
-      color: #fff;
-      text-align: center;
-      overflow: hidden;
-      isolation: isolate;
+      color: #fff; text-align: center; overflow: hidden; isolation: isolate;
       box-shadow: 0 14px 24px -18px rgba(0, 0, 0, .55);
     }
     .t-top::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+      content: ""; position: absolute; inset: 0;
       background-image: repeating-linear-gradient(115deg, rgba(255, 255, 255, .055) 0 2px, transparent 2px 9px);
-      opacity: .6;
-      pointer-events: none;
+      opacity: .6; pointer-events: none;
     }
     .t-top::after {
-      content: "x";
-      position: absolute;
-      right: -2.6rem; bottom: -5.4rem;
-      font-family: var(--display);
-      font-size: 17rem;
-      line-height: 1;
-      color: rgba(0, 0, 0, .13);
-      pointer-events: none;
+      content: "x"; position: absolute; right: -2.6rem; bottom: -5.4rem;
+      font-family: var(--display); font-size: 17rem; line-height: 1;
+      color: rgba(0, 0, 0, .13); pointer-events: none;
     }
     .t-row { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: .8rem; }
     .t-row .wordmark { font-size: 1.2rem; text-shadow: 0 1px 14px rgba(0, 0, 0, .22); }
     .t-row .wordmark .red { color: #fff; }
     .t-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .42rem;
-      font-size: .6rem;
-      font-weight: 800;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      padding: .36rem .72rem;
-      border: 1px solid rgba(255, 255, 255, .55);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .14);
+      display: inline-flex; align-items: center; gap: .42rem; font-size: .6rem; font-weight: 800;
+      letter-spacing: .2em; text-transform: uppercase; padding: .36rem .72rem;
+      border: 1px solid rgba(255, 255, 255, .55); border-radius: 999px; background: rgba(255, 255, 255, .14);
       box-shadow: 0 1px 0 rgba(255, 255, 255, .22) inset;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
     }
-    .t-badge::before {
-      content: "";
-      width: .38rem; height: .38rem;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, .22);
-    }
+    .t-badge::before { content: ""; width: .38rem; height: .38rem; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .22); }
     .t-qr {
-      position: relative; z-index: 1;
-      width: fit-content;
-      margin: 1.5rem auto 0;
-      padding: .9rem;
-      border-radius: 22px;
-      background: #fff;
-      box-shadow:
-        0 20px 42px rgba(0, 0, 0, .32),
-        0 0 0 1px rgba(0, 0, 0, .05) inset;
+      position: relative; z-index: 1; width: fit-content; margin: 1.5rem auto 0; padding: .9rem;
+      border-radius: 22px; background: #fff;
+      box-shadow: 0 20px 42px rgba(0, 0, 0, .32), 0 0 0 1px rgba(0, 0, 0, .05) inset;
     }
     .t-qr::before {
-      content: "";
-      position: absolute;
-      inset: -9px;
-      border-radius: 30px;
-      border: 1px dashed rgba(255, 255, 255, .5);
-      pointer-events: none;
+      content: ""; position: absolute; inset: -9px; border-radius: 30px;
+      border: 1px dashed rgba(255, 255, 255, .5); pointer-events: none;
     }
     #qr { width: 196px; height: 196px; display: flex; align-items: center; justify-content: center; }
     #qr img, #qr canvas { display: block; width: 196px !important; height: 196px !important; }
     .qr-fail { width: 196px; font-size: .8rem; line-height: 1.4; text-align: center; color: #555; overflow-wrap: anywhere; }
     .t-scan {
-      position: relative; z-index: 1;
-      margin-top: 1.15rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .7rem;
-      font-size: .62rem;
-      font-weight: 800;
-      letter-spacing: .24em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, .95);
+      position: relative; z-index: 1; margin-top: 1.15rem; display: flex; align-items: center;
+      justify-content: center; gap: .7rem; font-size: .62rem; font-weight: 800;
+      letter-spacing: .24em; text-transform: uppercase; color: rgba(255, 255, 255, .95);
     }
     .t-scan::before, .t-scan::after {
-      content: "";
-      width: clamp(1.2rem, 10%, 2.4rem);
-      height: 1px;
+      content: ""; width: clamp(1.2rem, 10%, 2.4rem); height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .6));
     }
     .t-scan::after { background: linear-gradient(90deg, rgba(255, 255, 255, .6), transparent); }
 
-    /* tear line */
     .t-tear {
-      position: relative;
-      height: 2px;
-      margin: 0 1.35rem;
+      position: relative; height: 2px; margin: 0 1.35rem;
       background-image: linear-gradient(90deg, #b9b3a8 0 11px, transparent 11px 19px);
-      background-size: 19px 2px;
-      background-repeat: repeat-x;
+      background-size: 19px 2px; background-repeat: repeat-x;
     }
     .t-tear::before, .t-tear::after {
-      content: ""; position: absolute; top: -13px;
-      width: 26px; height: 26px; border-radius: 50%;
-      background: var(--notch);
-      box-shadow: inset 0 3px 6px rgba(0, 0, 0, .35);
+      content: ""; position: absolute; top: -13px; width: 26px; height: 26px; border-radius: 50%;
+      background: var(--notch); box-shadow: inset 0 3px 6px rgba(0, 0, 0, .35);
     }
     .t-tear::before { left: calc(-1.35rem - 13px); }
     .t-tear::after { right: calc(-1.35rem - 13px); }
 
-    /* bottom: attendee details */
     .t-info { padding: 1.65rem 1.55rem 1.75rem; }
+    .t-event-name { font-size: .7rem; font-weight: 900; letter-spacing: .16em; color: var(--red); }
     .t-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: .45rem;
-      padding: .3rem .68rem;
-      border-radius: 999px;
-      background: rgba(235, 0, 40, .075);
-      border: 1px solid rgba(235, 0, 40, .18);
-      font-size: .6rem;
-      font-weight: 800;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: #EB0028;
-    }
-    .t-eyebrow::before {
-      content: "";
-      width: .36rem; height: .36rem;
-      border-radius: 50%;
-      background: var(--red);
-      box-shadow: 0 0 0 3px rgba(235, 0, 40, .15);
+      display: inline-flex; align-items: center; gap: .45rem; margin-top: .5rem; padding: .3rem .68rem;
+      border-radius: 999px; background: rgba(235, 0, 40, .075); border: 1px solid rgba(235, 0, 40, .18);
+      font-size: .6rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--red);
     }
     .t-info h3 {
-      margin-top: .6rem;
-      font-family: var(--display);
-      font-size: clamp(1.55rem, 6.4vw, 2.1rem);
-      line-height: 1.02;
-      letter-spacing: -.045em;
-      overflow-wrap: anywhere;
+      margin-top: .6rem; font-family: var(--display);
+      font-size: clamp(1.55rem, 6.4vw, 2.1rem); line-height: 1.02; letter-spacing: -.045em; overflow-wrap: anywhere;
     }
-    .t-meta { margin-top: .5rem; font-size: .85rem; font-weight: 600; color: #5b5b62; }
 
     .t-details {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .6rem;
-      margin-top: 1.25rem;
-      padding-top: 1.2rem;
-      border-top: 1px solid #e2ddd4;
-      min-width: 0;
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem;
+      margin-top: 1.25rem; padding-top: 1.2rem; border-top: 1px solid #e2ddd4;
     }
     .t-details .full { grid-column: 1 / -1; }
-    .t-details div {
-      min-width: 0;
-      padding: .62rem .72rem .68rem;
-      border-radius: 13px;
-      background: #efeae3;
-      border: 1px solid #e3ded5;
+    .t-details > div {
+      min-width: 0; padding: .62rem .72rem .68rem; border-radius: 13px;
+      background: #efeae3; border: 1px solid #e3ded5;
     }
     .t-details dt { font-size: .58rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #77777e; margin-bottom: .2rem; }
     .t-details dd { font-weight: 800; font-size: .95rem; overflow-wrap: anywhere; line-height: 1.3; }
     .t-details dd.tid {
-      display: inline-block;
-      margin-top: .1rem;
-      padding: .22rem .55rem;
-      border-radius: 8px;
-      background: #fff;
-      border: 1px dashed rgba(235, 0, 40, .32);
-      color: #EB0028;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: .92rem;
-      letter-spacing: .09em;
+      display: inline-block; margin-top: .1rem; padding: .22rem .55rem; border-radius: 8px;
+      background: #fff; border: 1px dashed rgba(235, 0, 40, .32); color: var(--red);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92rem; letter-spacing: .09em;
     }
 
+    /* event details on the ticket */
+    .ticket-event { margin-top: 1.4rem; padding-top: 1.25rem; border-top: 1px solid #e2ddd4; }
+    .ticket-event-heading {
+      display: flex; align-items: center; gap: .5rem; color: #77777e;
+      font-size: .6rem; font-weight: 800; letter-spacing: .18em;
+    }
+    .ticket-event-line { width: 18px; height: 2px; background: var(--red); border-radius: 2px; }
+    .ticket-event h4 { margin-top: .6rem; font-family: var(--display); font-size: 1.15rem; letter-spacing: -.03em; color: #111; }
+    .ticket-event-subtitle { margin-top: .15rem; font-size: .82rem; color: #666; }
+    .ticket-event-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem 1rem; margin-top: 1rem; }
+    .ticket-event-grid > div { min-width: 0; display: flex; flex-direction: column; gap: .15rem; }
+    .ticket-event-grid .wide { grid-column: 1 / -1; }
+    .event-label { font-size: .58rem; font-weight: 800; letter-spacing: .16em; color: #77777e; }
+    .ticket-event-grid strong { font-size: .9rem; color: #111; line-height: 1.3; overflow-wrap: anywhere; }
 
-    .t-actions { display: flex; gap: .7rem; flex-wrap: wrap; max-width: 400px; margin: 1.5rem auto 0; }
+    .t-actions { display: flex; gap: .7rem; flex-wrap: wrap; max-width: 408px; margin: 1.5rem auto 0; }
     .t-actions .btn { flex: 1 1 180px; padding: .85rem 1rem; font-size: .95rem; }
-
+    .t-actions .btn.full { flex-basis: 100%; }
     .t-note { max-width: 480px; margin: 1.1rem auto 0; text-align: center; font-size: .85rem; color: #a9a9b0; }
+    .t-clear {
+      display: block; margin: .9rem auto 0; padding: .4rem; border: 0; background: none;
+      color: #a9a9b0; font-size: .82rem; font-weight: 700; text-decoration: underline;
+      text-underline-offset: 3px; cursor: pointer;
+    }
+    .t-clear:hover { color: #fff; }
 
     /* ---------- footer ---------- */
-    footer {
-      background: #060607;
-      border-top: 1px solid var(--line);
-    }
+    footer { background: #060607; border-top: 1px solid var(--line); }
     .foot-inner {
-      max-width: var(--wrap);
-      margin: 0 auto;
-      padding: 1.8rem var(--gutter);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.2rem 2rem;
-      flex-wrap: wrap;
+      max-width: var(--wrap); margin: 0 auto; padding: 1.8rem var(--gutter);
+      display: flex; align-items: center; justify-content: space-between; gap: 1.2rem 2rem; flex-wrap: wrap;
     }
-
     .socials { display: flex; flex-wrap: wrap; gap: .6rem; list-style: none; }
     .socials a {
-      display: inline-flex;
-      align-items: center;
-      gap: .55rem;
-      padding: .55rem 1rem .55rem .8rem;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, .04);
-      color: #fff;
-      font-size: .86rem;
-      font-weight: 700;
+      display: inline-flex; align-items: center; gap: .55rem; padding: .55rem 1rem .55rem .8rem;
+      border-radius: 999px; border: 1px solid var(--line); background: rgba(255, 255, 255, .04);
+      color: #fff; font-size: .86rem; font-weight: 700;
       transition: background .15s, border-color .15s, transform .15s;
     }
     .socials a:hover { background: var(--red); border-color: var(--red); transform: translateY(-2px); }
     .socials svg { width: 20px; height: 20px; flex: none; }
-
     .legal {
-      max-width: var(--wrap);
-      margin: 0 auto;
-      padding: 1.1rem var(--gutter) 1.6rem;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      gap: .3rem 2rem;
-      flex-wrap: wrap;
-      font-size: .78rem;
-      color: #8a8a91;
+      max-width: var(--wrap); margin: 0 auto; padding: 1.1rem var(--gutter) 1.6rem;
+      border-top: 1px solid var(--line); display: flex; justify-content: space-between;
+      gap: .3rem 2rem; flex-wrap: wrap; font-size: .78rem; color: #8a8a91;
     }
 
     /* ---------- responsive ---------- */
+    @media (min-width: 901px) and (max-width: 1100px) {
+      main { gap: 1.4rem; padding-left: 1.4rem; padding-right: 1.4rem; }
+      .hero h1 { font-size: clamp(2rem, 3.5vw, 2.8rem); }
+      .event-card { padding: 1rem; }
+      .panel { padding: 1.35rem; }
+      .branches { gap: .35rem; }
+      .chip span { font-size: .8rem; padding: .8rem .25rem; }
+    }
+    @media (min-width: 1441px) {
+      main { max-width: 1320px; }
+      .hero h1 { font-size: 4.4rem; }
+    }
     @media (max-width: 900px) {
-      main { grid-template-columns: 1fr; align-items: start; }
+      main { grid-template-columns: 1fr; }
+      .hero { overflow: visible; }
+      .hero h1 { font-size: clamp(2.8rem, 12vw, 4.5rem); white-space: normal; }
     }
     @media (max-width: 560px) {
       .t-actions .btn { flex-basis: 100%; }
       .pill { display: none; }
       .foot-inner { flex-direction: column; align-items: flex-start; }
+      .event-card { margin-top: 1.5rem; padding: 1.2rem; }
+      .event-tagline { font-size: .95rem; }
 
-      /* perks: keep all three on one row */
       .perks { flex-wrap: nowrap; gap: .3rem; }
-.perks li {
-  flex: 1 1 0;
-  min-width: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .35rem;
-  padding: .55rem .3rem;
-  font-size: clamp(.55rem, 2.8vw, .82rem);
-  white-space: nowrap;
-}
-.perks li::before {
-  display: block;
-  content: "";
-  flex: 0 0 .38rem;
-  width: .38rem;
-  height: .38rem;
-  border-radius: 50%;
-  background: var(--red);
-}
+      .perks li {
+        flex: 1 1 0; min-width: 0; justify-content: center; gap: .35rem; padding: .55rem .3rem;
+        font-size: clamp(.55rem, 2.8vw, .82rem); white-space: nowrap;
+      }
+      .perks li::before { flex-basis: .38rem; width: .38rem; height: .38rem; }
 
-      /* footer socials: keep all three on one row */
       .socials { width: 100%; flex-wrap: nowrap; gap: .4rem; }
       .socials li { flex: 1 1 0; min-width: 0; }
       .socials a {
-        width: 100%;
-        justify-content: center;
-        gap: .35rem;
-        padding: .55rem .25rem;
-        font-size: clamp(.62rem, 2.8vw, .86rem);
-        white-space: nowrap;
+        width: 100%; justify-content: center; gap: .35rem; padding: .55rem .25rem;
+        font-size: clamp(.62rem, 2.8vw, .86rem); white-space: nowrap;
       }
       .socials svg { width: 17px; height: 17px; }
 
-      /* license sentence: one line on phones */
-/* license sentence: one line on phones */
-.legal { flex-direction: column; gap: .4rem; }
-
-.legal span:first-child {
-  font-size: clamp(.58rem, 2.65vw, .82rem);
-  white-space: nowrap;
-}
-
-.legal span:last-child {
-  font-size: .78rem;
-}
-}
-
-/* The mobile media query is now closed correctly. */
-
-@media (max-width: 360px) {
-  .t-details {
-    grid-template-columns: 1fr;
-  }
-
-  .branches {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  * {
-    transition: none !important;
-  }
-}
+      .legal { flex-direction: column; gap: .4rem; }
+      .legal span:first-child { font-size: clamp(.58rem, 2.65vw, .82rem); white-space: nowrap; }
+    }
+    @media (max-width: 360px) {
+      .t-details, .ticket-event-grid, .branches { grid-template-columns: 1fr; }
+      .ticket-event-grid .wide { grid-column: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
 
     /* ---------- print: ticket only ---------- */
-/* ---------- PRINT: TICKET ONLY ---------- */
-@media print {
-  @page {
-    margin: 12mm;
-  }
-
-  html,
-  body {
-    background: #fff !important;
-    background-image: none !important;
-    color: #000 !important;
-  }
-
-  .top,
-  footer,
-  .tv-head,
-  .t-actions,
-  .t-note {
-    display: none !important;
-  }
-
-  main {
-    display: block !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    max-width: none !important;
-  }
-
-  .ticket-view {
-    display: block !important;
-  }
-
-  .ticket {
-    background: #f7f5f2 !important;
-    background-image: none !important;
-    box-shadow: none !important;
-    border: 1px solid #ccc !important;
-    break-inside: avoid;
-  }
-
-  /* Remove unwanted dark blocks and decorative dots */
-  .ticket-event {
-    background: transparent !important;
-    background-image: none !important;
-    box-shadow: none !important;
-  }
-
-  .ticket-event::before,
-  .ticket-event::after,
-  .t-eyebrow::before {
-    display: none !important;
-    content: none !important;
-  }
-
-  * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-}
-    
-/* ========== LAPTOP & DESKTOP SIZING FIX ========== */
-/* ========== LAPTOP & DESKTOP SIZING ========== */
-
-@media (min-width: 901px) {
-  main {
-    max-width: 1240px;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
-    gap: clamp(1.5rem, 3vw, 3rem);
-    padding-top: 3rem;
-    padding-bottom: 4rem;
-  }
-
-  .hero {
-    min-width: 0;
-  }
-
-  .hero h1 {
-    font-size: clamp(3rem, 5.1vw, 5.3rem);
-    letter-spacing: -.075em;
-  }
-
-  .event-tagline {
-    max-width: 360px;
-    font-size: .98rem;
-  }
-
-  .event-card {
-    max-width: 430px;
-    padding: 1.2rem;
-  }
-
-  .panel {
-    min-width: 0;
-    padding: clamp(1.4rem, 2.2vw, 2rem);
-  }
-}
-
-/* Smaller laptops */
-@media (min-width: 901px) and (max-width: 1100px) {
-  main {
-    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
-    gap: 1.4rem;
-    padding-left: 1.4rem;
-    padding-right: 1.4rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.8rem, 4.5vw, 3.8rem);
-  }
-
-  .event-card {
-    padding: 1rem;
-  }
-
-  .panel {
-    padding: 1.35rem;
-  }
-
-  .branches {
-    gap: .35rem;
-  }
-
-  .chip span {
-    font-size: .8rem;
-    padding: .8rem .25rem;
-  }
-}
-
-/* Larger desktop screens */
-@media (min-width: 1441px) {
-  main {
-    max-width: 1320px;
-  }
-
-  .hero h1 {
-    font-size: 5.8rem;
-  }
-}
-
-/* Prevent horizontal overflow */
-main,
-.hero,
-.panel,
-.ticket-view {
-  min-width: 0;
-}
-
-img,
-canvas {
-  max-width: 100%;
-}
-
-/* Mobile heading */
-@media (max-width: 560px) {
-  .hero h1 {
-    font-size: clamp(2.8rem, 12.5vw, 4.5rem);
-    white-space: normal;
-  }
-}
-
-/* Prevent horizontal overflow */
-main,
-.hero,
-.panel,
-.ticket-view {
-  min-width: 0;
-}
-
-img,
-canvas {
-  max-width: 100%;
-}
-
-/* ========== TICKET DETAILS ========== */
-
-.t-details {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.t-details > div {
-  min-width: 0;
-}
-
-.t-details dd {
-  overflow-wrap: anywhere;
-}
-
-/* ========== FIX MOBILE MEDIA QUERY ========== */
-@media (max-width: 560px) {
-  .hero h1 {
-    font-size: clamp(3rem, 13vw, 4.5rem);
-  }
-}
-
-@media (max-width: 360px) {
-  .t-details {
-    grid-template-columns: 1fr;
-  }
-
-  .branches {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* FINAL CROSSROADS LAPTOP FIX */
-@media (min-width: 901px) {
-  main {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: 2rem;
-  }
-
-  .hero {
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.2rem, 4vw, 4rem);
-    letter-spacing: -.07em;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .panel {
-    min-width: 0;
-    width: 100%;
-  }
-}
-
-@media (min-width: 901px) and (max-width: 1100px) {
-  .hero h1 {
-    font-size: clamp(2rem, 3.5vw, 2.8rem);
-  }
-}
-
-@media (max-width: 900px) {
-  .hero {
-    overflow: visible;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.8rem, 10vw, 5rem);
-    white-space: normal;
-    overflow: visible;
-  }
-}
-
-
+    @media print {
+      @page { margin: 12mm; }
+      html, body { background: #fff !important; background-image: none !important; color: #000 !important; }
+      .top, footer, .tv-head, .t-actions, .t-note, .t-clear { display: none !important; }
+      main { display: block !important; padding: 0 !important; margin: 0 !important; max-width: none !important; }
+      .ticket-view { display: block !important; }
+      .ticket { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
   </style>
 </head>
 
@@ -1050,57 +441,47 @@ canvas {
   <header class="top">
     <div class="top-inner">
       <a class="wordmark" href="/" aria-label="TEDxAASTMT"><span class="red">TED</span><span class="red">x</span>AASTMT</a>
-      <span class="pill"><i></i>Registration open</span>
+      <span class="pill" id="status-pill"><i></i><span id="status-text">Registration open</span></span>
     </div>
   </header>
 
   <main>
+    <section class="hero" aria-labelledby="title">
+      <div class="rule" aria-hidden="true"></div>
 
-<section class="hero" aria-labelledby="title">
-  <div class="rule" aria-hidden="true"></div>
+      <h1 id="title">CROSS<span class="red">ROADS</span></h1>
+      <p class="event-tagline">At the Intersection of What if and What Could Be.</p>
 
+      <div class="event-card">
+        <div class="event-card-heading"><span class="event-dot"></span>EVENT DETAILS</div>
 
+        <div class="event-detail">
+          <span class="event-icon" aria-hidden="true">◷</span>
+          <div>
+            <small>DATE &amp; TIME</small>
+            <strong data-ev="date">Tuesday, 15 December 2026</strong>
+            <span data-ev="time">2:30 PM</span>
+          </div>
+        </div>
 
-  <h1 id="title">CROSS<span class="red">ROADS</span></h1>
+        <div class="event-divider"></div>
 
-  <p class="event-tagline">
-  At the Intersection of What if and What Could Be.
-  </p>
-
-  <div class="event-card">
-    <div class="event-card-heading">
-      <span class="event-dot"></span>
-      EVENT DETAILS
-    </div>
-
-    <div class="event-detail">
-      <span class="event-icon">◷</span>
-      <div>
-        <small>DATE & TIME</small>
-        <strong>Tuesday, 15 December 2026</strong>
-        <span>2:30 PM</span>
+        <div class="event-detail">
+          <span class="event-icon" aria-hidden="true">⌖</span>
+          <div>
+            <small>LOCATION</small>
+            <strong data-ev="place">AASTMT AbuQir</strong>
+            <span data-ev="venue">Pharmacy · Romanian Stadium</span>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="event-divider"></div>
-
-    <div class="event-detail">
-      <span class="event-icon">⌖</span>
-      <div>
-        <small>LOCATION</small>
-        <strong>AASTMT AbuQir</strong>
-        <span>Pharmacy · Romanian Stadium</span>
-      </div>
-    </div>
-  </div>
-
-  <ul class="perks">
-    <li>Free entry</li>
-    <li>Limited seats</li>
-    <li>Instant QR ticket</li>
-  </ul>
-</section>
-
+      <ul class="perks">
+        <li>Free entry</li>
+        <li>Limited seats</li>
+        <li>Instant QR ticket</li>
+      </ul>
+    </section>
 
     <section class="panel" aria-labelledby="form-title">
       <h2 id="form-title">Get your ticket</h2>
@@ -1118,7 +499,7 @@ canvas {
         <div class="field">
           <label class="lbl" for="regno">Registration number</label>
           <input id="regno" type="text" inputmode="numeric" autocomplete="off" maxlength="9" required aria-describedby="regno-hint regno-err">
-          <p class="hint" id="regno-hint">Your AASTMT registration number.</p>
+          <p class="hint" id="regno-hint">Your 9-digit AASTMT registration number.</p>
           <p class="error" id="regno-err" role="alert"></p>
         </div>
 
@@ -1139,14 +520,17 @@ canvas {
         </div>
 
         <button class="btn block" type="submit" id="submit">Get my ticket</button>
-        <p class="fine">We only use your details to manage event entry.</p>
+        <p class="fine">
+          We only use your name, registration number, email and branch to manage event entry and
+          won't share them. Lost your ticket? Register again with the same details to get it back.
+        </p>
       </form>
     </section>
 
     <section class="ticket-view" id="ticket-view" tabindex="-1" aria-live="polite">
       <div class="tv-head">
         <h2 id="tv-title">You're in.</h2>
-        <p>Screenshot or download this ticket as it may be lost.</p>
+        <p>Screenshot or download your ticket so you have it at the entrance.</p>
       </div>
 
       <article class="ticket" aria-label="Your TEDxAASTMT ticket">
@@ -1162,77 +546,67 @@ canvas {
         <div class="t-tear" aria-hidden="true"></div>
 
         <div class="t-info">
+          <p class="t-event-name">CROSSROADS</p>
+          <p class="t-eyebrow">Attendee details</p>
+          <h3 id="tk-name"></h3>
 
-<p style="font-size:.7rem;font-weight:900;letter-spacing:.16em;color:#EB0028;">
-  CROSSROADS
-</p>
+          <dl class="t-details">
+            <div>
+              <dt>Registration no.</dt>
+              <dd id="tk-regno"></dd>
+            </div>
+            <div>
+              <dt>Branch</dt>
+              <dd id="tk-branch"></dd>
+            </div>
+            <div class="full">
+              <dt>Email</dt>
+              <dd id="tk-email"></dd>
+            </div>
+            <div class="full">
+              <dt>Ticket ID</dt>
+              <dd class="tid" id="tk-id"></dd>
+            </div>
+          </dl>
 
-<p class="t-eyebrow">Attendee details</p>
-<h3 id="tk-name"></h3>
+          <section class="ticket-event">
+            <div class="ticket-event-heading">
+              <span class="ticket-event-line"></span>
+              <span>EVENT DETAILS</span>
+            </div>
+            <h4>CROSSROADS</h4>
+            <p class="ticket-event-subtitle">At the Intersection of What if and What Could Be.</p>
 
-<dl class="t-details attendee-details">
-  <div>
-    <dt>Registration no.</dt>
-    <dd id="tk-regno"></dd>
-  </div>
-
-  <div>
-    <dt>Branch</dt>
-    <dd id="tk-branch"></dd>
-  </div>
-
-  <div class="full">
-    <dt>Email</dt>
-    <dd id="tk-email"></dd>
-  </div>
-
-  <div class="full ticket-id">
-    <dt>Ticket ID</dt>
-    <dd class="tid" id="tk-id"></dd>
-  </div>
-</dl>
-
-<section class="ticket-event">
-  <div class="ticket-event-heading">
-    <span class="ticket-event-line"></span>
-    <span>EVENT DETAILS</span>
-  </div>
-
-  <h4>CROSSROADS</h4>
-  <p class="ticket-event-subtitle">Ideas worth sharing. Paths worth exploring.</p>
-
-  <div class="ticket-event-grid">
-    <div>
-      <span class="event-label">DATE</span>
-      <strong>Tuesday, 15 December 2026</strong>
-    </div>
-
-    <div>
-      <span class="event-label">TIME</span>
-      <strong>2:30 PM</strong>
-    </div>
-
-    <div class="event-location">
-      <span class="event-label">LOCATION</span>
-      <strong>AASTMT AbuQir</strong>
-    </div>
-
-    <div>
-      <span class="event-label">VENUE</span>
-      <strong>Pharmacy · Romanian Stadium</strong>
-    </div>
-  </div>
-</section>
-
-
-</div>
+            <div class="ticket-event-grid">
+              <div class="wide">
+                <span class="event-label">DATE</span>
+                <strong data-ev="date">Tuesday, 15 December 2026</strong>
+              </div>
+              <div>
+                <span class="event-label">TIME</span>
+                <strong data-ev="time">2:30 PM</strong>
+              </div>
+              <div>
+                <span class="event-label">LOCATION</span>
+                <strong data-ev="place">AASTMT AbuQir</strong>
+              </div>
+              <div class="wide">
+                <span class="event-label">VENUE</span>
+                <strong data-ev="venue">Pharmacy · Romanian Stadium</strong>
+              </div>
+            </div>
+          </section>
+        </div>
       </article>
 
       <div class="t-actions">
-        <button class="btn" type="button" id="print-ticket" disabled>Preparing ticket...</button>
-        <button class="btn ghost" type="button" id="download-qr" disabled>Download QR</button>
+        <button class="btn" type="button" id="download-ticket" disabled>Preparing ticket...</button>
+        <button class="btn ghost" type="button" id="print-ticket" disabled>Print ticket</button>
+        <button class="btn ghost full" type="button" id="add-calendar">Add to calendar</button>
       </div>
 
+      <p class="t-note">Each ticket admits one person and works once. Please don't share it.</p>
+      <button class="t-clear" type="button" id="clear-ticket">Not you? Clear this ticket from this device</button>
     </section>
   </main>
 
@@ -1296,28 +670,61 @@ canvas {
     const notice = $("notice");
     const submitButton = $("submit");
     const printButton = $("print-ticket");
-    const downloadButton = $("download-qr");
+    const downloadButton = $("download-ticket");
     const branchError = $("branch-err");
 
     let qrReady = false;
-    const eventInfo = { date: "", place: "" };
+    let registrationOpen = true;
+    // Defaults match the HTML; /event-status overrides them if it answers.
+    const eventInfo = {
+      date: "Tuesday, 15 December 2026",
+      time: "2:30 PM",
+      place: "AASTMT AbuQir",
+      venue: "Pharmacy · Romanian Stadium",
+      start: "2026-12-15T14:30:00+02:00"
+    };
 
     function showNotice(message) {
       notice.textContent = message || "";
       notice.classList.toggle("show", Boolean(message));
     }
 
-    /* ============ EVENT INFO (shown on the ticket) ============ */
+    /* ============ EVENT INFO: single source of truth ============ */
+    function renderEventInfo() {
+      document.querySelectorAll("[data-ev]").forEach((el) => {
+        const value = eventInfo[el.dataset.ev];
+        if (value) el.textContent = value;
+      });
+    }
+
+    function applyRegistrationState() {
+      const pill = $("status-pill");
+      $("status-text").textContent = registrationOpen ? "Registration open" : "Registration closed";
+      pill.classList.toggle("closed", !registrationOpen);
+
+      Array.from(form.elements).forEach((el) => { el.disabled = !registrationOpen; });
+      if (!registrationOpen) {
+        submitButton.textContent = "Registration closed";
+        showNotice("Registration is closed. Follow our Instagram for updates.");
+      }
+    }
+
     async function loadEventInfo() {
       try {
         const res = await fetch(STATUS_URL, { cache: "no-store" });
         if (!res.ok) throw new Error("Status " + res.status);
-        const data = await res.json();
-        eventInfo.date = data.eventDate || "";
-        eventInfo.place = data.eventPlace || "";
+        const d = await res.json();
+        if (d.eventDate) eventInfo.date = d.eventDate;
+        if (d.eventTime) eventInfo.time = d.eventTime;
+        if (d.eventPlace) eventInfo.place = d.eventPlace;
+        if (d.eventVenue) eventInfo.venue = d.eventVenue;
+        if (d.eventStart) eventInfo.start = d.eventStart;
+        registrationOpen = d.registrationOpen !== false;
       } catch (err) {
-        console.warn("Could not load event info:", err); // not fatal
+        console.warn("Could not load event info, using defaults:", err); // not fatal
       }
+      renderEventInfo();
+      applyRegistrationState();
     }
 
     /* ============ VALIDATION ============ */
@@ -1374,7 +781,7 @@ canvas {
     function setButtons(ready, label) {
       printButton.disabled = !ready;
       downloadButton.disabled = !ready;
-      printButton.textContent = label;
+      downloadButton.textContent = label;
     }
 
     async function renderQR(value, fallbackId) {
@@ -1411,7 +818,7 @@ canvas {
         }
         if (!qrReady) throw new Error("QR code was not generated");
 
-        setButtons(true, "Print my ticket");
+        setButtons(true, "Download ticket");
       } catch (err) {
         console.error("QR error:", err);
         box.innerHTML = "";
@@ -1433,7 +840,7 @@ canvas {
       $("tk-email").textContent = ticket.email || "";
       $("tk-id").textContent = ticket.ticketId || "";
 
-
+      renderEventInfo();
       document.body.classList.add("has-ticket");
 
       await renderQR(ticket.ticketToken, ticket.ticketId);
@@ -1450,26 +857,159 @@ canvas {
       } catch (e) { return null; }
     }
 
-    /* ============ BUTTONS ============ */
-    printButton.addEventListener("click", () => { if (qrReady) window.print(); });
+    $("clear-ticket").addEventListener("click", () => {
+      if (!confirm("Remove this ticket from this device? You can get it back by registering again with the same details.")) return;
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
+      form.reset();
+      Object.values(fields).forEach((f) => { f.err.textContent = ""; f.el.setAttribute("aria-invalid", "false"); });
+      $("qr").innerHTML = "";
+      qrReady = false;
+      document.body.classList.remove("has-ticket");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    /* ============ DOWNLOAD TICKET AS IMAGE ============ */
+    function fitText(ctx, text, maxWidth, startSize, weight) {
+      let size = startSize;
+      do {
+        ctx.font = weight + " " + size + "px Arial, Helvetica, sans-serif";
+        size -= 2;
+      } while (ctx.measureText(text).width > maxWidth && size > 16);
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    function buildTicketImage() {
+      const qrEl = $("qr").querySelector("img, canvas");
+      if (!qrEl) return null;
+
+      const W = 816, H = 1500, pad = 56;
+      const c = document.createElement("canvas");
+      c.width = W; c.height = H;
+      const ctx = c.getContext("2d");
+
+      // card
+      ctx.fillStyle = "#0b0b0c"; ctx.fillRect(0, 0, W, H);
+      ctx.save();
+      roundRect(ctx, 24, 24, W - 48, H - 48, 48); ctx.clip();
+      ctx.fillStyle = "#f7f5f2"; ctx.fillRect(0, 0, W, H);
+
+      // red top
+      const g = ctx.createLinearGradient(0, 0, W, 700);
+      g.addColorStop(0, "#EB0028"); g.addColorStop(0.5, "#EB0028"); g.addColorStop(1, "#9c001b");
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, 700);
+
+      ctx.fillStyle = "#fff"; ctx.textBaseline = "alphabetic";
+      ctx.font = "900 44px Arial Black, Arial, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText("TEDxAASTMT", pad + 8, 118);
+
+      ctx.font = "800 20px Arial, sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText("ADMIT ONE", W - pad - 8, 116);
+
+      // QR
+      const qs = 400, qx = (W - qs) / 2 - 0, qy = 170;
+      ctx.fillStyle = "#fff";
+      roundRect(ctx, qx - 32, qy - 32, qs + 64, qs + 64, 44); ctx.fill();
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(qrEl, qx, qy, qs, qs);
+      ctx.imageSmoothingEnabled = true;
+
+      ctx.fillStyle = "#fff"; ctx.textAlign = "center";
+      ctx.font = "800 22px Arial, sans-serif";
+      ctx.fillText("SCAN AT THE ENTRANCE", W / 2, 660);
+
+      // info
+      ctx.textAlign = "left";
+      ctx.fillStyle = "#EB0028";
+      ctx.font = "900 24px Arial, sans-serif";
+      ctx.fillText("CROSSROADS", pad + 8, 790);
+
+      ctx.fillStyle = "#111";
+      const name = $("tk-name").textContent;
+      fitText(ctx, name, W - pad * 2 - 16, 64, "900");
+      ctx.fillText(name, pad + 8, 868);
+
+      const rows = [
+        ["REGISTRATION NO.", $("tk-regno").textContent],
+        ["BRANCH", $("tk-branch").textContent],
+        ["EMAIL", $("tk-email").textContent],
+        ["TICKET ID", $("tk-id").textContent],
+        ["DATE & TIME", eventInfo.date + " · " + eventInfo.time],
+        ["LOCATION", eventInfo.place + " · " + eventInfo.venue]
+      ];
+      let y = 940;
+      rows.forEach(([label, value]) => {
+        ctx.fillStyle = "#77777e";
+        ctx.font = "800 18px Arial, sans-serif";
+        ctx.fillText(label, pad + 8, y);
+        ctx.fillStyle = "#111";
+        fitText(ctx, value, W - pad * 2 - 16, 30, "800");
+        ctx.fillText(value, pad + 8, y + 40);
+        y += 92;
+      });
+
+      ctx.restore();
+      return c;
+    }
 
     downloadButton.addEventListener("click", () => {
-      const canvas = $("qr").querySelector("canvas");
-      const img = $("qr").querySelector("img");
-      const href = canvas ? canvas.toDataURL("image/png") : img && img.src;
-      if (!href) return;
+      if (!qrReady) return;
+      const c = buildTicketImage();
+      if (!c) return;
+      c.toBlob((blob) => {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "TEDxAASTMT-ticket-" + $("tk-id").textContent + ".png";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+      }, "image/png");
+    });
+
+    printButton.addEventListener("click", () => { if (qrReady) window.print(); });
+
+    /* ============ ADD TO CALENDAR (.ics) ============ */
+    $("add-calendar").addEventListener("click", () => {
+      const start = new Date(eventInfo.start);
+      if (isNaN(start)) return;
+      const end = new Date(start.getTime() + 3 * 60 * 60 * 1000);
+      const fmt = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+      const ics = [
+        "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//TEDxAASTMT//Tickets//EN",
+        "BEGIN:VEVENT",
+        "UID:" + $("tk-id").textContent + "@tedxaastmt",
+        "DTSTAMP:" + fmt(new Date()),
+        "DTSTART:" + fmt(start),
+        "DTEND:" + fmt(end),
+        "SUMMARY:TEDxAASTMT CROSSROADS",
+        "LOCATION:" + (eventInfo.place + " - " + eventInfo.venue).replace(/,/g, "\\,"),
+        "DESCRIPTION:Bring your QR ticket (ID " + $("tk-id").textContent + ").",
+        "END:VEVENT", "END:VCALENDAR"
+      ].join("\r\n");
+      const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
       const a = document.createElement("a");
-      a.href = href;
-      a.download = "TEDxAASTMT-ticket-" + $("tk-id").textContent + ".png";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      a.href = url; a.download = "TEDxAASTMT-CROSSROADS.ics";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
     });
 
     /* ============ SUBMIT ============ */
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      if (submitButton.disabled) return;
+      if (submitButton.disabled || !registrationOpen) return;
 
       let firstInvalid = null;
       Object.values(fields).forEach((field) => {
@@ -1511,11 +1051,11 @@ canvas {
             email: r.email,
             branch: r.branch,
             ticketId: r.ticketId,
-            ticketToken: r.ticketToken,
-            eventDate: eventInfo.date,
-            eventPlace: eventInfo.place
+            ticketToken: r.ticketToken
           };
           saveTicket(ticket);
+          submitButton.disabled = false;
+          submitButton.textContent = "Get my ticket";
           await showTicket(ticket, result.alreadyRegistered ? "Welcome back." : "You're in.");
           return;
         }
