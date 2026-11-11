@@ -338,6 +338,10 @@
 
   <script>
     /* ============ CONFIG ============ */
+    // Paste your Apps Script web app URL (ends in /exec) to run with NO Node server.
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxizLAp6NdDOJVpZPMrd-JJE6CNYo9xVe-2UH8VJhivY8JIzIsfgC962YjGZLhwfxKsbQ/exec";
+    const DIRECT = Boolean(APPS_SCRIPT_URL);
+
     // Pinned version. To lock it down fully, download this file, host it next to
     // checkin.html and list it first below (works offline on venue wifi too).
     const SCANNER_SOURCES = [
@@ -425,6 +429,22 @@
       return { status: response.status, data };
     }
 
+    // One call for both modes: straight to Apps Script, or through server.js.
+    function callApi(action, orgCode, token) {
+      if (DIRECT) {
+        return api(APPS_SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action, code: orgCode, token })
+        });
+      }
+      return api(action === "login" ? "/login" : "/checkin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Checkin-Pin": orgCode },
+        body: JSON.stringify(action === "login" ? {} : { ticketToken: token })
+      });
+    }
+
     /* ============ LOGIN ============ */
     $("loginForm").addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -438,11 +458,7 @@
       setLoginStatus("Checking code...", "info");
 
       try {
-        const { data } = await api("/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "X-Checkin-Pin": entered },
-          body: "{}"
-        });
+        const { data } = await callApi("login", entered);
 
         if (!data.ok) {
           setLoginStatus(data.message || "Code not recognised.", "error");
@@ -512,11 +528,7 @@
       startButton.disabled = true;
 
       try {
-        const { status, data } = await api("/checkin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "X-Checkin-Pin": code },
-          body: JSON.stringify({ ticketToken: token })
-        });
+        const { status, data } = await callApi("scan", code, token);
 
         setStatus("", "");
 
